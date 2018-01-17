@@ -18,7 +18,7 @@ void fftw_fwd( double* in , complex<double>* out ) {
 
 
 #pragma omp parallel for
-  for ( i=0 ; i<M ; i++ ) 
+  for ( i=0 ; i<M ; i++ )
     out[i] = ( fout[i][0] + I * fout[i][1] ) * norm ;
 
 }

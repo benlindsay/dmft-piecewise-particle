@@ -19,7 +19,7 @@ void forces() {
 
 #pragma omp parallel for private(j)
   for ( i=0 ; i<M ; i++ )
-    for ( j=0 ; j<Dim ; j++ ) 
+    for ( j=0 ; j<Dim ; j++ )
       gradwA[j][i] = gradwB[j][i] = gradwP[j][i] = 0.0 ;
 
 
@@ -76,7 +76,7 @@ void forces() {
       for ( i=0 ; i<M ; i++ )
         gradwA[j][i] -= tmp[i] * eps/rho0 ;
     }
-  } 
+  }
 
   if (eps != 0.0) {
     // A pulling on P //

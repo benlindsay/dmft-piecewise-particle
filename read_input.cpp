@@ -19,11 +19,11 @@ void read_input( void ) {
 
   fscanf( inp , "%lf %d" , &phiHB , &Nhb ) ;
   fgets( tt , 80 , inp ) ;
-  
+
   fscanf( inp , "%lf" , &CG_ratio ) ;
   fgets( tt , 80 , inp ) ;
 
-  
+
   // Blank line //
   fgets( tt , 80 , inp ) ;
 
@@ -44,8 +44,8 @@ void read_input( void ) {
 
   fscanf( inp , "%d" , &A_partics ) ;
   fgets( tt , 80 , inp ) ;
-  
-  
+
+
   // Blank line //
   fgets( tt , 80 , inp ) ;
 
@@ -61,7 +61,7 @@ void read_input( void ) {
 
   fscanf( inp , "%lf %lf" , &kappa ,&kappa_p) ;
   fgets( tt , 80 , inp ) ;
-   cout<<"kappa "<<kappa<<" "<<kappa_p<<endl;
+  cout<<"kappa "<<kappa<<" "<<kappa_p<<endl;
   Diff = ( double* ) calloc( 3 , sizeof( double ) ) ;
   fscanf( inp , "%lf %lf %lf %lf" , &Diff[0] , &Diff[1], &Diff[2],&Diff_rot ) ;
   fgets( tt , 80 , inp ) ;
@@ -71,12 +71,12 @@ void read_input( void ) {
   fgets( tt , 80 , inp ) ;
 
 
-  for ( i=0 ; i<Dim ; i++ ) 
-    fscanf( inp , "%lf" , &L[i] ) ; 
+  for ( i=0 ; i<Dim ; i++ )
+    fscanf( inp , "%lf" , &L[i] ) ;
   fgets( tt , 80 , inp ) ;
 
-  for ( i=0 ; i<Dim ; i++ ) 
-    fscanf( inp , "%d" , &Nx[i] ) ; 
+  for ( i=0 ; i<Dim ; i++ )
+    fscanf( inp , "%d" , &Nx[i] ) ;
   fgets( tt , 80 , inp ) ;
 
 

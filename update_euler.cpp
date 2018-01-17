@@ -19,8 +19,8 @@ void update_euler(){
   for(i=0 ; i<nP ; i++){
     for(j=0;j<4;j++){
 
-      //get the predicted quaterns, q~//	
-      tmp_q[i][j] =  euler_q[i][j] + Diff_rot*delt*trq[i][j] + q_noise[i][j];	
+      //get the predicted quaterns, q~//
+      tmp_q[i][j] =  euler_q[i][j] + Diff_rot*delt*trq[i][j] + q_noise[i][j];
 
 
     }//j
@@ -29,7 +29,7 @@ void update_euler(){
 
     for(j=0;j<4;j++){
 
-      euler_q[i][j] = tmp_q[i][j] + lamb*euler_q[i][j]; //unit length correction 
+      euler_q[i][j] = tmp_q[i][j] + lamb*euler_q[i][j]; //unit length correction
     }//j
 
   }//i=nP
@@ -43,11 +43,11 @@ void update_euler(){
   for(i = 0 ; i<nP ;i++){
     cent_ind = nD * ( Nda + Ndb ) + nA * Nha + nB * Nhb + sites_per_gnp * i ;
     for(j = 0; j<ng_per_partic; j++){
-      ind = cent_ind + j * ( Ng + 1 ) + 1 ; 
+      ind = cent_ind + j * ( Ng + 1 ) + 1 ;
       gind = ng_per_partic*i + j;
       matrix_trs_vect(euler_A[i],grf_bf_x[gind],x[ind]);
 
-      if(tp[ind] != -1) { cout<<"wrong em update !!"<<endl; exit(1);} 
+      if(tp[ind] != -1) { cout<<"wrong em update !!"<<endl; exit(1);}
 
       for(k=0 ;k<Dim; k++){
         x[ind][k] += x[cent_ind][k] ;

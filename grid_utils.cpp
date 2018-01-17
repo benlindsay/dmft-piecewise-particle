@@ -9,17 +9,17 @@ void add_segment( int ) ;
 void charge_grid( ) {
 
   int i, j;
-  
+
 #pragma omp parallel for
-  for ( i=0 ; i<M ; i++ ) 
-    for ( j=0 ; j<ntypes ; j++ ) 
+  for ( i=0 ; i<M ; i++ )
+    for ( j=0 ; j<ntypes ; j++ )
       rho[j][i] = 0.0 ;
 
 #pragma omp parallel for
   for ( i=0 ; i<M ; i++ ) {
     rhoda[i] = rhoha[i] = rhodb[i] = rhohb[i] = rhop[i] = smrhop[i] = rhoga[i] = 0.0 ;
-    for ( j=0 ; j<nthreads ; j++ ) 
-      rhoda_t[j][i] = rhoha_t[j][i] = rhodb_t[j][i] = rhohb_t[j][i] 
+    for ( j=0 ; j<nthreads ; j++ )
+      rhoda_t[j][i] = rhoha_t[j][i] = rhodb_t[j][i] = rhohb_t[j][i]
         = rhoga_t[j][i] = rhop_t[j][i] = 0.0 ;
   }
 
@@ -68,9 +68,9 @@ void add_segment( int id ) {
        spline_weights + lagrange_weights == 0 )
     die("Invalid spline/lagrange weight function") ;
 
-  int j, g_ind[Dim] , ix, iy, iz, nn[Dim] , Mindex, grid_ct; 
+  int j, g_ind[Dim] , ix, iy, iz, nn[Dim] , Mindex, grid_ct;
   //double **W , gdx , W3;
-  
+
   double gdx , W3;
 
   // W = ( double** ) calloc( Dim , sizeof( double* ) );
@@ -83,7 +83,7 @@ void add_segment( int id ) {
   ///////////////////////////////////////////////
   for ( j=0 ; j<Dim ; j++ ) {
 
-   // W[j] = ( double* ) calloc( pmeorder+1 , sizeof( double ) );
+    // W[j] = ( double* ) calloc( pmeorder+1 , sizeof( double ) );
 
 
     // Distance to nearest grid point if even //
@@ -92,16 +92,16 @@ void add_segment( int id ) {
 
       gdx = x[id][j] - double( g_ind[j] ) * dx[j] ;
     }
- 
+
 
     // Distance to nearest mid-point between grid points if odd //
     else {
       g_ind[j] = int( ( x[id][j]  ) / dx[j] ) ;
       if ( g_ind[j] >= Nx[j] ){
-       //cout<<id<<" "<<g_ind[j]<<endl;
-//       printf("Using the boundary grid point!\n") ;
+        //cout<<id<<" "<<g_ind[j]<<endl;
+        //       printf("Using the boundary grid point!\n") ;
 
-       g_ind[j] = Nx[j]-1;
+        g_ind[j] = Nx[j]-1;
       }
       gdx = x[id][j]  - ( double( g_ind[j] ) + 0.5 ) * dx[j] ;
     }
@@ -110,10 +110,10 @@ void add_segment( int id ) {
     /////////////////////////////////////////
     // Get the weights for each grid point //
     /////////////////////////////////////////
-    if ( lagrange_weights ) 
+    if ( lagrange_weights )
       lagrange_get_weights( gdx , dx[j] , W_tsn[id][j] );
 
-    else if ( spline_weights ) 
+    else if ( spline_weights )
       spline_get_weights( gdx , dx[j] , W_tsn[id][j] );
 
   }//for ( j=0 ; j<3...
@@ -124,46 +124,46 @@ void add_segment( int id ) {
   // Assign the weights to all relevant grid points //
   ////////////////////////////////////////////////////
   grid_ct = 0 ;
-  
+
   ///////////////////////////////////////////
   // 3D version of particle-to-mesh scheme //
   ///////////////////////////////////////////
   if ( Dim == 3 ) {
     for ( ix = 0 ; ix < pmeorder+1 ; ix++ ) {
-      
+
       nn[0] = g_ind[0] + ix - ( pmeorder/2 + pmeorder % 2 );
-      
+
       if ( nn[0] < 0 ) nn[0] += Nx[0] ;
       else if ( nn[0] >= Nx[0] ) nn[0] -= Nx[0] ;
-  
+
       for ( iy = 0 ; iy < pmeorder+1 ; iy++ ) {
-  
+
         nn[1] = g_ind[1] + iy - ( pmeorder/2 + pmeorder % 2 ) ;
-        
+
         if ( nn[1] < 0 ) nn[1] += Nx[1] ;
         else if ( nn[1] >= Nx[1] ) nn[1] -= Nx[1] ;
-  
+
         for ( iz = 0 ; iz < pmeorder+1 ; iz++ ) {
-  
+
           nn[2] = g_ind[2] + iz - ( pmeorder/2 + pmeorder % 2 ) ;
-          
+
           if ( nn[2] < 0 ) nn[2] += Nx[2] ;
           else if ( nn[2] >= Nx[2] ) nn[2] -= Nx[2] ;
-  
-  
+
+
           // stack() returns index in [0,M]
           Mindex = stack_n( nn ) ;
-  
+
           if ( Mindex >= M ) {
             char nm[40] ;
-            sprintf(nm, "%d Index = %d out of range, particle %d %lf %lf %lf\n" , 
-                step, Mindex, id , x[id][0], x[id][1], x[id][2] ) ;
+            sprintf(nm, "%d Index = %d out of range, particle %d %lf %lf %lf\n" ,
+                    step, Mindex, id , x[id][0], x[id][1], x[id][2] ) ;
 
             die(nm) ;
           }
-  
+
           W3 = W_tsn[id][0][ix] * W_tsn[id][1][iy] * W_tsn[id][2][iz] / gvol ;
-  
+
           if ( id < nsD && tp[id] == 0 )
             rhoda_t[tid][ Mindex ] += W3 / CG_ratio ;
           else if ( id < nsD && tp[id] == 1 )
@@ -181,12 +181,12 @@ void add_segment( int id ) {
             sprintf(nm, "Invalid partic type. tp[%d] = %d\n" , id, tp[id] ) ;
             die(nm);
           }
-  
+
           grid_inds[ id ][ grid_ct ] = Mindex ;
           grid_W[ id ][ grid_ct ] = W3 ;
-  
+
           grid_ct++ ;
-  
+
         }
       }
     }
@@ -197,31 +197,31 @@ void add_segment( int id ) {
   ///////////////////////////////////////////
   else if ( Dim == 2 ) {
     for ( ix = 0 ; ix < pmeorder+1 ; ix++ ) {
-      
+
       nn[0] = g_ind[0] + ix - ( pmeorder/2 + pmeorder % 2 );
-      
+
       if ( nn[0] < 0 ) nn[0] += Nx[0] ;
       else if ( nn[0] >= Nx[0] ) nn[0] -= Nx[0] ;
-  
+
       for ( iy = 0 ; iy < pmeorder+1 ; iy++ ) {
-  
+
         nn[1] = g_ind[1] + iy - ( pmeorder/2 + pmeorder % 2 ) ;
-        
+
         if ( nn[1] < 0 ) nn[1] += Nx[1] ;
         else if ( nn[1] >= Nx[1] ) nn[1] -= Nx[1] ;
-  
+
         Mindex = stack_n( nn ) ;
-  
+
         if ( Mindex >= M ) {
           char nm[40] ;
-          sprintf(nm, "%d Index = %d out of range, particle %d %lf %lf %lf\n" , 
-              step, Mindex, id , x[id][0], x[id][1], x[id][2] ) ;
+          sprintf(nm, "%d Index = %d out of range, particle %d %lf %lf %lf\n" ,
+                  step, Mindex, id , x[id][0], x[id][1], x[id][2] ) ;
 
           die(nm) ;
         }
-  
+
         W3 = W_tsn[id][0][ix] * W_tsn[id][1][iy] / gvol ;
-          
+
         if ( id < nsD && tp[id] == 0 )
           rhoda_t[tid][ Mindex ] += W3 / CG_ratio ;
         else if ( id < nsD && tp[id] == 1 )
@@ -239,13 +239,13 @@ void add_segment( int id ) {
           sprintf(nm, "Invalid partic type. tp[%d] = %d\n" , id, tp[id] ) ;
           die(nm);
         }
-  
+
         grid_inds[ id ][ grid_ct ] = Mindex ;
         grid_W[ id ][ grid_ct ] = W3 ;
-  
+
         grid_ct++ ;
-  
-        
+
+
       }
     }
   }
@@ -253,10 +253,10 @@ void add_segment( int id ) {
   ///////////////////////////
   // Free allocated memory //
   ///////////////////////////
-//  for ( j=0 ; j<Dim ; j++ ) 
+  //  for ( j=0 ; j<Dim ; j++ )
   //  free( W[j] ) ;
 
- // free(W) ;
+  // free(W) ;
 
 }// End lagrange add charge
 
@@ -272,7 +272,7 @@ void add_segment( int id ) {
 void lagrange_get_weights( double dx , double H , double *W ) {
   double norm, dx2, dx4, H2, H4;
 
-  if ( pmeorder == 0 ) 
+  if ( pmeorder == 0 )
     W[0] = 1. ;
 
   else if ( pmeorder == 2 ) {
@@ -322,14 +322,14 @@ void lagrange_get_weights( double dx , double H , double *W ) {
     W[0] = ( -32.*dx4*dx + 80.*H*dx4 + 80.*H2*dx2*dx - 200.*H2*H*dx2
              - 18.*H4*dx + 45.*H4*H ) / norm ;
     W[1] = ( 160.*dx4* - 240.*H*dx4 - 1040.*H2*dx2*dx + 1560.*H2*H*dx2
-           + 250.*H4*dx - 375.*H4*H ) / norm ;
+             + 250.*H4*dx - 375.*H4*H ) / norm ;
     W[2] = ( -320.*dx4*dx + 160.*H*dx4 + 2720.*H2*dx2*dx - 1360.*H2*H*dx2
-           - 4500.*H4*dx + 2250*H4*H ) / norm ;
+             - 4500.*H4*dx + 2250*H4*H ) / norm ;
 
     W[2] = ( 320.*dx4*dx + 160.*H*dx4 - 2720.*H2*dx2*dx - 1360.*H2*H*dx2
-           + 4500.*H4*dx + 2250*H4*H ) / norm ;
+             + 4500.*H4*dx + 2250*H4*H ) / norm ;
     W[1] = ( -160.*dx4* - 240.*H*dx4 + 1040.*H2*dx2*dx + 1560.*H2*H*dx2
-           - 250.*H4*dx - 375.*H4*H ) / norm ;
+             - 250.*H4*dx - 375.*H4*H ) / norm ;
     W[0] = ( 32.*dx4*dx + 80.*H*dx4 - 80.*H2*dx2*dx - 200.*H2*H*dx2
              + 18.*H4*dx + 45.*H4*H ) / norm ;
   }
@@ -346,11 +346,11 @@ void lagrange_get_weights( double dx , double H , double *W ) {
 
 void spline_get_weights( double dx , double H , double *W ) {
   double sx = dx / H ;
-  
+
   double sx2, sx3, sx4, sx5;
   double scale = double( M ) / V ;
 
-  if ( pmeorder == 0 ) 
+  if ( pmeorder == 0 )
     W[0] = 1. * scale ;
 
   else if ( pmeorder == 1 ) {

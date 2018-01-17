@@ -40,22 +40,22 @@ void torque(void){
 #pragma omp parallel for private(dr,drp,m,j,k,l,ind,gind,center_ind,mdrp2,mdr2)\
     reduction(+:Ubond)
     for(i=0;i<nP;i++){
-      center_ind = nD * ( Nda + Ndb ) + nA * Nha + nB * Nhb + sites_per_gnp * i ;	   
+      center_ind = nD * ( Nda + Ndb ) + nA * Nha + nB * Nhb + sites_per_gnp * i ;
       //real torque on each nP
-      for( m=0 ; m<ng_per_partic ; m++){	
+      for( m=0 ; m<ng_per_partic ; m++){
         ind = center_ind + m * ( Ng + 1 ) + 1 ;
         gind = ng_per_partic*i + m;
-        mdr2 = pbc_mdr2( x[ind+1] , x[ind] , dr ) ;//dist between r' and r 
+        mdr2 = pbc_mdr2( x[ind+1] , x[ind] , dr ) ;//dist between r' and r
         mdrp2 = pbc_mdr2(x[ind],x[center_ind],drp) ; //dist between rcm and r
-        if(tp[ind] != -1) { cout<<"wrong trq calc !!"<<endl; exit(1);} 
+        if(tp[ind] != -1) { cout<<"wrong trq calc !!"<<endl; exit(1);}
 
-        Ubond += 1.5*mdr2;	   
+        Ubond += 1.5*mdr2;
         for(j=0;j<3;j++){
 
           for(k=0 ; k<3 ; k++){
             for(l=0; l<3 ; l++){
-              real_trq[i][j] += 3.0*epslon[j][k][l]*drp[k]*dr[l];	   
-              //	real_trq[i][j] += epslon[j][k][l]*drp[k]*f[ind][l];			       
+              real_trq[i][j] += 3.0*epslon[j][k][l]*drp[k]*dr[l];
+              //	real_trq[i][j] += epslon[j][k][l]*drp[k]*f[ind][l];
             }//l
 
 

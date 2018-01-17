@@ -10,7 +10,7 @@ double pbc_mdr2( double *r1 , double *r2 , double *dr ) {
 
   for ( j=0 ; j<Dim ; j++ ) {
     dr[j] = r1[j] - r2[j] ;
-    
+
     if ( dr[j] > Lh[j] )
       dr[j] -= L[j] ;
 
@@ -78,17 +78,17 @@ void field_gradient( double *inp , double *out , int dir ) {
 
 void field_gradient_cdif( double *inp , double *out , int dir ) {
 
-  
+
   int i, j, nx2, nx, px, px2, nn[Dim], ntmp[Dim] ;
-  
+
   for ( i=0 ; i<M ; i++ ) {
 
     unstack( i , nn ) ;
-    
+
     for ( j=0 ; j<Dim ; j++ )
       ntmp[j] = nn[j] ;
 
-    
+
     ntmp[ dir ] = nn[ dir ] - 2 ;
     if ( ntmp[ dir ] < 0 ) ntmp[ dir ] += Nx[ dir ] ;
     nx2 = stack_n( ntmp ) ;
@@ -110,7 +110,7 @@ void field_gradient_cdif( double *inp , double *out , int dir ) {
       / ( 12.0 * dx[ dir ] ) ;
 
   }
- 
+
 
 }
 
@@ -199,12 +199,12 @@ void get_r( int id , double r[Dim] ) {
 
   for ( i=0; i<Dim; i++) {
     r[i] = dx[i] * double( n[i] );
-    
+
     if ( r[i] > L[i]/2.0 )
       r[i] -= L[i];
     else if ( r[i] <= -L[i]/2.0 )
       r[i] += L[i];
- 
+
   }
 }
 
@@ -221,9 +221,9 @@ double get_k_alias( int id , double k[Dim] ) {
   if ( Nx[0] % 2 == 0 && n[0] == Nx[0] / 2 )
     k[0] = 0.0 ;
   else if ( double(n[0]) < double(Nx[0]) / 2.)
-   k[0] = 2*PI*double(n[0])/L[0];
+    k[0] = 2*PI*double(n[0])/L[0];
   else
-   k[0] = 2*PI*double(n[0]-Nx[0])/L[0];
+    k[0] = 2*PI*double(n[0]-Nx[0])/L[0];
 
   if (Dim>1) {
     if ( Nx[1] % 2 == 0 && n[1] == Nx[1] / 2 )
@@ -254,7 +254,7 @@ double get_k_alias( int id , double k[Dim] ) {
       }
     }
   }
-  
+
   for (i=0; i<Dim; i++)
     kmag += k[i]*k[i];
 
@@ -293,7 +293,7 @@ void zero_average(double* tp) {
   int i;
 
   double integ;
-  
+
   integ = integrate(tp);
 
   integ *= (1.0 / V);

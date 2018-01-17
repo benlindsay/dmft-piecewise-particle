@@ -89,8 +89,8 @@ void initialize() {
     //nP = int( phiP * rho0 * V /(Vp+ Ng * ng_per_partic * CG_ratio )) ;
     nP = int( phiP * rho0 * V /(Vp));
 
-    printf("nP = %d particles with %d grafted chains per particle\n" , 
-        nP , ng_per_partic ) ;
+    printf("nP = %d particles with %d grafted chains per particle\n" ,
+           nP , ng_per_partic ) ;
 
   }
 
@@ -114,7 +114,7 @@ void initialize() {
   printf("\nnD: %d\nnA: %d\nnB: %d\nnP: %d\n\n" , nD, nA, nB, nP ) ;
 
   // Derived quantities //
-  nstot = nA * Nha + nB * Nhb + nD * ( Nda + Ndb ) 
+  nstot = nA * Nha + nB * Nhb + nD * ( Nda + Ndb )
     + nP * ( 1 + ng_per_partic * ( Ng + 1 ) ) ;
 
   step = 0 ;
@@ -158,7 +158,7 @@ void initialize() {
 
   }//ntypes
 
-  printf("Memory allocated: %lf MB\n" , mem_use / 1.0E6 ) ; 
+  printf("Memory allocated: %lf MB\n" , mem_use / 1.0E6 ) ;
   fflush(stdout) ;
 
   initialize_configuration() ;
@@ -170,11 +170,11 @@ void initialize() {
 
   charge_grid() ;
 
-  printf("grid charged\n"); fflush(stdout); 
+  printf("grid charged\n"); fflush(stdout);
 
   initialize_potential() ;
 
-  printf("potentials initialized, written\n") ; fflush( stdout ) ; 
+  printf("potentials initialized, written\n") ; fflush( stdout ) ;
 }
 
 
@@ -207,7 +207,7 @@ void initialize_potential( ) {
 
   // Set up the particle-particle potential //
   fftw_fwd( tmp , ktmp ) ;
-  for ( i=0 ; i<M ; i++ ) 
+  for ( i=0 ; i<M ; i++ )
     ktmp2[i] = ktmp[i] * ktmp[i] ;
   fftw_back( ktmp2 , uP ) ;
 
@@ -234,7 +234,7 @@ void initialize_potential( ) {
   }
 
 
-  int j2; 
+  int j2;
   for ( j=0 ; j<Dim ; j++ ) {
     for ( i=0 ; i<M ; i++ ) {
       get_r( i , rc ) ;
@@ -274,7 +274,7 @@ void initialize_potential( ) {
     fftw_fwd( grad_uPG[j] , grad_uPG_hat[j] ) ;
     sprintf( nm , "grad_upg_%d.dat" , j ) ;
     write_grid_data( nm , grad_uPG[j] ) ;
-    
+
     fftw_fwd( grad_uAG[j] , grad_uAG_hat[j] ) ;
     sprintf( nm , "grad_uag_%d.dat" , j ) ;
     write_grid_data( nm , grad_uAG[j] ) ;
@@ -286,7 +286,7 @@ void allocate( ) {
   int i, j,k;
   Stress_bond_t = ( double*** ) calloc( Dim , sizeof( double**) ) ;
 
-  W_tsn = (double***) calloc(nstot, sizeof( double** )); 
+  W_tsn = (double***) calloc(nstot, sizeof( double** ));
 
 
   for(i =0; i< nstot; i++){
@@ -319,8 +319,8 @@ void allocate( ) {
 
     vir_func[i] = (double**) calloc(Dim, sizeof(double*));
 
-    vir_func_hat[i] = (complex<double>**) calloc(Dim, 
-        sizeof(complex<double>*));
+    vir_func_hat[i] = (complex<double>**) calloc(Dim,
+                                                 sizeof(complex<double>*));
     vir_funcpp[i] = (double**) calloc(Dim, sizeof(double*));
     vir_funcpp_hat[i] = (complex<double>**) calloc(Dim, sizeof(complex<double>*));
     vir_funcpg[i] = (double**) calloc(Dim, sizeof(double*));
@@ -332,7 +332,7 @@ void allocate( ) {
 
       vir_func_hat[i][j] = ( complex<double>* ) calloc( M , sizeof( complex<double> ) ) ;
       vir_funcpp[i][j] = ( double* ) calloc( M , sizeof( double ) ) ;
-      vir_funcpp_hat[i][j] = ( complex<double>* ) calloc( M , sizeof( complex<double> ) ) ;		
+      vir_funcpp_hat[i][j] = ( complex<double>* ) calloc( M , sizeof( complex<double> ) ) ;
       vir_funcpg[i][j] = ( double* ) calloc( M , sizeof( double ) ) ;
       vir_funcpg_hat[i][j] = ( complex<double>* ) calloc( M , sizeof( complex<double> ) ) ;
 
@@ -345,8 +345,8 @@ void allocate( ) {
           epslon[i][j][k] = (j >i ? 1 :-1.0);
         else if( (j>i) and (j>k) )
           epslon[i][j][k] = (i > k ? 1 : -1.0);
-        else if(i>k and i>j) 
-          epslon[i][j][k] = ( j > k ? -1: 1.0); 
+        else if(i>k and i>j)
+          epslon[i][j][k] = ( j > k ? -1: 1.0);
         else{}
       }
     }
@@ -375,8 +375,8 @@ void allocate( ) {
     xc[i] = ( char* ) calloc( 8 , sizeof( char ) ) ;
   }
 
-  mem_use += nstot * 2 * 2 * Dim * sizeof( double ) ; 
-  mem_use += nstot * 8 * sizeof( char ) ; 
+  mem_use += nstot * 2 * 2 * Dim * sizeof( double ) ;
+  mem_use += nstot * 8 * sizeof( char ) ;
   mem_use += nstot*3*(pmeorder+1)*sizeof( double ) ;
 
   tp = ( int* ) calloc( nstot , sizeof( int ) );
@@ -415,7 +415,7 @@ void allocate( ) {
     grad_uAG_hat[i] = ( complex<double>* ) calloc( M , sizeof( complex<double> ) ) ;
   }
 
-  mem_use += 3 * Dim * M * sizeof( double ) ; 
+  mem_use += 3 * Dim * M * sizeof( double ) ;
 
   ktmp = ( complex<double>* ) calloc( M , sizeof( complex<double> ) ) ;
   tmp_PP = ( double* ) calloc( M , sizeof( double ) ) ;
@@ -432,11 +432,11 @@ void allocate( ) {
   uAG = ( double* ) calloc( M , sizeof( double ) ) ;
   r_dudr = ( double* ) calloc( M , sizeof( double ) ) ;
 
-  mem_use += 7 * M * sizeof( double ) ; 
+  mem_use += 7 * M * sizeof( double ) ;
 
 
   // Array that maintains the equilibrium bond lengths for
-  // the grafting sites on the grafted nanoparticles. 
+  // the grafting sites on the grafted nanoparticles.
   graft_req = ( double** ) calloc( nP , sizeof( double* ) ) ;
   for ( i=0 ; i<nP ; i++ )
     graft_req[i] = ( double* ) calloc( ng_per_partic , sizeof( double ) ) ;
@@ -454,27 +454,27 @@ void allocate( ) {
   dAdphi = ( double*** ) calloc( nP , sizeof( double** ) ) ;
   dAdtheta = ( double*** ) calloc( nP , sizeof( double** ) ) ;
   dAdpsi = ( double*** ) calloc( nP , sizeof( double** ) ) ;
-  real_trq = ( double** ) calloc( nP , sizeof( double* ) ) ;           
-  trq = ( double** ) calloc( nP , sizeof( double* ) ) ;           
+  real_trq = ( double** ) calloc( nP , sizeof( double* ) ) ;
+  trq = ( double** ) calloc( nP , sizeof( double* ) ) ;
   for ( i=0 ; i<nP ; i++ ){
     real_trq [i] = ( double* ) calloc(4 , sizeof( double) ) ;
     trq [i] = ( double* ) calloc(4 , sizeof( double) ) ;
-    euler_ang[i] = ( double* ) calloc( 3 , sizeof( double)); 
-    euler_q[i] = ( double* ) calloc( 4 , sizeof( double)); 
+    euler_ang[i] = ( double* ) calloc( 3 , sizeof( double));
+    euler_q[i] = ( double* ) calloc( 4 , sizeof( double));
     euler_B[i] = ( double** ) calloc( 4 , sizeof( double*));
 
     euler_A[i] = ( double** ) calloc( 3 , sizeof( double*));
-    euler_adot[i] = ( double* ) calloc( 4 , sizeof( double)); 
+    euler_adot[i] = ( double* ) calloc( 4 , sizeof( double));
     euler_Q[i] = ( double** ) calloc( 3 , sizeof( double*));
     dAdphi[i] = ( double** ) calloc( 3 , sizeof( double*));
     dAdtheta[i] = ( double** ) calloc( 3 , sizeof( double*));
     dAdpsi[i] = ( double** ) calloc( 3 , sizeof( double*));
     for(j=0;j<3;j++){
-      dAdphi[i][j] = ( double* ) calloc( 3 , sizeof( double)); 
-      dAdpsi[i][j] = ( double* ) calloc( 3 , sizeof( double)); 
-      dAdtheta[i][j] = ( double* ) calloc( 3 , sizeof( double)); 
-      euler_A[i][j] = ( double* ) calloc( 3 , sizeof( double));		
-      euler_Q[i][j] = ( double* ) calloc( 3 , sizeof( double));		
+      dAdphi[i][j] = ( double* ) calloc( 3 , sizeof( double));
+      dAdpsi[i][j] = ( double* ) calloc( 3 , sizeof( double));
+      dAdtheta[i][j] = ( double* ) calloc( 3 , sizeof( double));
+      euler_A[i][j] = ( double* ) calloc( 3 , sizeof( double));
+      euler_Q[i][j] = ( double* ) calloc( 3 , sizeof( double));
     }
     for(j=0;j<4;j++){
 
@@ -505,7 +505,7 @@ void allocate( ) {
   gamma_sig = ( double* ) calloc( M , sizeof( double ) ) ;
   smrhop = ( double* ) calloc( M , sizeof( double ) ) ;
 
-  mem_use += 8 * M * sizeof( double ) ; 
+  mem_use += 8 * M * sizeof( double ) ;
 
   rhoga_t = ( double** ) calloc( nthreads , sizeof( double* ) ) ;
   rhoha_t = ( double** ) calloc( nthreads , sizeof( double* ) ) ;

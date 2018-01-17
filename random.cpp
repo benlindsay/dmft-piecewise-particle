@@ -30,7 +30,7 @@ double ran2 (void)
   static long iv[NTAB];
   double temp;
   extern long idum;
-  
+
   if (idum <= 0) {
     if (-(idum) < 1) idum = 1;
     else idum = -(idum);
@@ -43,7 +43,7 @@ double ran2 (void)
     }
     iy = iv[0];
   }
-  
+
   k = (idum) / IQ1;
   idum = IA1 * (idum - k * IQ1) - k * IR1;
   if (idum < 0) idum += IM1;
@@ -78,7 +78,7 @@ void random_unit_vec( double *v ) {
 
   for ( i=0 ; i<3 ; i++ )
     v[i] = xi[i] / mxi ;
-} 
+}
 
 
 double gasdev2() {
@@ -97,7 +97,7 @@ double gasdev2() {
     iset=1;
     return v2*fac;
 
-  } 
+  }
   else {
     iset=0;
     return gset;

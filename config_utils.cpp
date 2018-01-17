@@ -47,13 +47,13 @@ void read_gro( FILE *ip ) {
   fgets( tt , 80 , ip ) ;
   fscanf( ip , "%d\n" , &di ) ;
 
-  if ( di != nstot ) 
+  if ( di != nstot )
     die("Number of sites in input.gro does not match!\n");
 
   ind = 0 ;
 
   int a = 0;
-  for ( k=0 ; k<nD ; k++ ) { 
+  for ( k=0 ; k<nD ; k++ ) {
     for ( m=0 ; m<Nda + Ndb ; m++ ) {
       a++;
       fscanf( ip , "%5d" , &di ) ;
@@ -216,12 +216,12 @@ void read_gro( FILE *ip ) {
     for (j=0; j<Dim; j++) {
       x[i][j] *= 10.0;
       x_bac[i][j] *= 10.0;
-}
-}
+    }
+  }
 
   // Assign the labels //
   for ( i=0 ; i<nstot ; i++ ) {
-    if ( tp[i] == 0 ) 
+    if ( tp[i] == 0 )
       xc[i] = "H" ;
     else if ( tp[i] == 1 )
       xc[i] = "He" ;
@@ -259,7 +259,7 @@ void read_quaternions(FILE *ip){
   fgets( tt , 80 , ip ) ;
   fscanf( ip , "%d" , &di ) ;
   fgets( tt, 80 , ip ) ;
-  if ( di != nP) 
+  if ( di != nP)
     die("Number of nP in input_q.gro does not match!\n");
 
 
@@ -359,7 +359,7 @@ void write_np() {
   int gind,i, j, ind, k, m, resind , center_ind;
   int real_ind,sites_per_gnp = 1 + ng_per_partic * ( 1 + Ng );
 
-  if ( step == 0 ) 
+  if ( step == 0 )
     otp = fopen( "traj_np.gro" , "w" ) ;
   else
     otp = fopen( "traj_np.gro" , "a" ) ;
@@ -403,7 +403,7 @@ void write_np() {
 
       fprintf( otp , "\n" ) ;
       ind++ ;
-      real_ind ++; 
+      real_ind ++;
     }//ng_per_partic
 
 
@@ -571,7 +571,7 @@ void write_gro() {
 
   FILE *otp ;
   int i, j, ind, k, m, resind ;
-  if ( step == 0 ) 
+  if ( step == 0 )
     otp = fopen( "output.gro" , "w" ) ;
   else
     otp = fopen( "output.gro" , "a" ) ;
@@ -739,7 +739,7 @@ void bias_config( void ) {
   /*
   // Random A homopolymers //
   for ( k=0 ; k<nA ; k++ ) {
-  for ( j=0 ; j<Dim ; j++ ) 
+  for ( j=0 ; j<Dim ; j++ )
   x[ind][j] = ran2() * L[j] ;
 
   tp[ ind ] = 0 ;
@@ -766,7 +766,7 @@ void bias_config( void ) {
 
   // Random B homopolymers //
   for ( k=0 ; k<nB ; k++ ) {
-  for ( j=0 ; j<Dim ; j++ ) 
+  for ( j=0 ; j<Dim ; j++ )
   x[ind][j] = ran2() * L[j] ;
 
   tp[ ind ] = 1 ;
@@ -790,7 +790,7 @@ void bias_config( void ) {
 
   }
   }
-  */ 
+  */
 
 
   for ( k=0 ; k<nP ; k++ ) {
@@ -798,10 +798,10 @@ void bias_config( void ) {
     double u[Dim] ;
 
 
-    //x[ind][0] = ran2() * L[0];  
+    //x[ind][0] = ran2() * L[0];
     x[ind][0] = ran2() * L[0] * phi_filler - (L[0]*phi_filler)/2.0 + L[0]/2.0;
     x[ind][1] = ran2() * L[1] * phi_filler - (L[1]*phi_filler)/2.0 + L[1]/2.0;
-    //x[ind][2] = ran2() * sqrt_nP * (Rp) * sin(ran2() * 2.0 * PI) + L[2]/2.0;  
+    //x[ind][2] = ran2() * sqrt_nP * (Rp) * sin(ran2() * 2.0 * PI) + L[2]/2.0;
     x[ind][2] = L[2] - ran2() * L[2] * (1.0-phi_M)  - (L[2]*phi_M)/2.0;
     //x[ind][2] = L[2] * ran2() ;
 
@@ -813,11 +813,11 @@ void bias_config( void ) {
     if(Dim ==3 ) {  for(j=0 ; j<3 ; j++){
 
       euler_ang[k][j] = 0;
-      euler_q[k][j+1] = 0; 
+      euler_q[k][j+1] = 0;
     }
 
     euler_q[k][0] = 1;
-    // euler_ang[k][0] = PI/2.0; 
+    // euler_ang[k][0] = PI/2.0;
     }
     tp[ ind ] = 2 ;
 
@@ -834,7 +834,7 @@ void bias_config( void ) {
         gind = k*(ng_per_partic) + m;
         if(k==0 and m==0)cout<<"fibonacci grafting is used"<<endl;
       }
-      else if( Dim ==3 and  uni_sig ==2){//uniform grafting 
+      else if( Dim ==3 and  uni_sig ==2){//uniform grafting
         unif_sig ( u , m );
         gind = k*(ng_per_partic) + m;
         if(k==0  and m==0)cout<<"uniform grafting is used"<<endl;
@@ -896,7 +896,7 @@ void bias_config( void ) {
   // Assign the labels //
   for ( i=0 ; i<nstot ; i++ ) {
     //cout << "i: " << i << "tp[i]: " << tp[i] << endl;
-    if ( tp[i] == 0 ) 
+    if ( tp[i] == 0 )
       xc[i] = "H" ;
     else if ( tp[i] == 1 )
       xc[i] = "He" ;

@@ -54,7 +54,7 @@ void write_stress( ) {
        for ( j=0 ; j<4  ; j++ )
        fprintf( otp , "%lf " , sts_buf[i][j][k] ) ;
        */
-    fprintf( otp , "\n" ) ;	
+    fprintf( otp , "\n" ) ;
     fprintf( otp_pp , "\n" ) ;
     fprintf( otp_ng , "\n" ) ;
   }
@@ -82,11 +82,11 @@ void write_kspace_data( const char *nm , complex<double> *kdt ) {
 
     k2 = get_k( i , kv ) ;
 
-    for ( j=0 ; j<Dim ; j++ ) 
+    for ( j=0 ; j<Dim ; j++ )
       fprintf( otp , "%lf " , kv[j] ) ;
 
-    fprintf( otp , "%1.5e %1.5e %1.5e %1.5e\n" , abs(kdt[i]), sqrt(k2), 
-        real(kdt[i]) , imag(kdt[i]) ) ;
+    fprintf( otp , "%1.5e %1.5e %1.5e %1.5e\n" , abs(kdt[i]), sqrt(k2),
+             real(kdt[i]) , imag(kdt[i]) ) ;
 
     if ( Dim == 2 && nn[0] == Nx[0]-1 )
       fprintf( otp , "\n" ) ;

@@ -85,14 +85,14 @@ int main( int argc , char** argv ) {
        if ( stress_freq > 0 && step % stress_freq == 0 ) {
        calc_stress() ;
 
-       for ( j=0 ; j<Dim ; j++ ){ 
+       for ( j=0 ; j<Dim ; j++ ){
        for ( k=0 ; k<Dim ; k++ ) {
        sts_buf[buff_ind][j][k]= Rg3*Ptens[j][k];//( j<Dim ? Stress_bonds[j][k]:0.0) ;
        sts_buf_pp[buff_ind][j][k] = Rg3*Stress_PP[j][k];
        sts_buf_ng[buff_ind][j][k] = Rg3*Stress_Ng[j][k];
 
     //for ( k=0 ; k<nP;  k++ ){
-    //euler_adot[k][j] = euler_q[k][j];	
+    //euler_adot[k][j] = euler_q[k][j];
     //sts_buf[buff_ind][j][k+Dim] = euler_q[k][j];
     //}
     }
@@ -102,7 +102,7 @@ int main( int argc , char** argv ) {
 
     if(step % sample_freq == 0){
       write_np();
-    }  
+    }
 
 
     /*
@@ -186,12 +186,12 @@ int main( int argc , char** argv ) {
       if ( nB > 0.0 )
         write_grid_data( "rhohb.dat" , rhohb ) ;
 
-      if ( nP > 0.0 ) 
+      if ( nP > 0.0 )
         write_grid_data( "rhop.dat" , rhop ) ;
 
       /*
          if ( step > sample_wait ) {
-         for ( i=0 ; i<M ; i++ ) 
+         for ( i=0 ; i<M ; i++ )
          ktmp2[i] = avg_sk[0][i] / num_averages ;
          write_kspace_data( "avg_sk_A.dat" , ktmp2 ) ;
 
