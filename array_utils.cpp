@@ -192,7 +192,7 @@ void unstack(int id, int nn[Dim] ) {
 }
 
 void get_r( int id , double r[Dim] ) {
-  int i, id2, n[Dim];
+  int i, n[Dim];
 
   unstack(id, n);
 
@@ -211,7 +211,7 @@ void get_r( int id , double r[Dim] ) {
 double get_k_alias( int id , double k[Dim] ) {
 
   double kmag = 0.0;
-  int i, id2, n[Dim] , j , has_nyquist = 0;
+  int i, n[Dim] , j , has_nyquist = 0;
   for ( i=0 ; i<Dim ; i++ )
     if ( Nx[i] % 2 == 0 )
       has_nyquist = 1;
@@ -244,7 +244,7 @@ double get_k_alias( int id , double k[Dim] ) {
   }
 
   // Kills off the Nyquist modes
-  if ( id2 != 0 && has_nyquist ) {
+  if ( id != 0 && has_nyquist ) {
     for ( i=0 ; i<Dim ; i++ ) {
       if ( k[i] == 0.0 ) {
         for ( j=0 ; j<Dim ; j++ )
@@ -269,7 +269,7 @@ double get_k_alias( int id , double k[Dim] ) {
 double get_k(int id, double k[Dim]) {
 
   double kmag = 0.0;
-  int i, id2, n[Dim];
+  int i, n[Dim];
 
   unstack(id, n);
 
