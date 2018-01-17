@@ -1,0 +1,29 @@
+20 0       Na, Nb for the diblock
+0.000  16     Volume fraction, chain length for A homopolymers
+0.000 16     Volume fraction, chain length for B homopolymers
+1.0         CG_ratio 
+
+0.202     Volume fraction nanoparticles
+0 40 0 Grafted chain density, length of grafted chains
+1.77951     Rp, nanoparticle radius
+0.35590    Xi, nanoparticle interface width
+0.35590     a, polymer monomer size
+0       particle_type flag (0 = neutral, 1 = type A)
+
+17.74583 rho0, in units normalized by diblock properties
+0         chi, 
+0  eps
+50.0 50.0    kappa, 
+1.0 1.0 5.0 5.0  Monomer mobility/diffusion coefficients
+
+8.897565 8.897565 59.3171  Lx, Ly, Lz
+25 25 105  Nx, Ny, Nz
+0.1       time step
+1           grid interpolation order
+
+1000000000       simulation steps
+25000        print frequency
+0000        pre-equilibration steps (chiAB = 0)
+250000      avg_freq
+0 25000  sample_wait, sample_freq
+0          stress_frequency

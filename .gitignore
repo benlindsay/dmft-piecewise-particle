@@ -1,0 +1,6 @@
+*.o
+*.out
+*.dat
+dmft
+test*
+.tags
