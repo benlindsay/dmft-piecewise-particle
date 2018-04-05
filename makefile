@@ -1,7 +1,7 @@
 CC = icpc
 #CFLAGS = -pg -fopenmp
-CFLAGS = -O3 -openmp -Wall -I$(FFTW_OPENMP)/include
-LIBS = -openmp  -lm  -O3 -lfftw3_omp -lfftw3 -lpthread -L$(FFTW_OPENMP)/lib
+CFLAGS = -O3 -qopenmp -Wall -I$(TACC_FFTW3_INC)
+LIBS = -lm -lfftw3_omp -lfftw3 -lpthread -L$(TACC_FFTW3_LIB)
 
 
 #############################################################################
