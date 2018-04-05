@@ -583,11 +583,11 @@ void write_gro() {
   resind = 0 ;
   for ( k=0 ; k<nD ; k++ ) {
     for ( m=0 ; m<Nda + Ndb ; m++ ) {
-      fprintf( otp , "%5d" , resind % 100000 + 1 ) ;
+      fprintf( otp , "%5d" , (resind + 1) % 100000 ) ;
       fprintf( otp , "%-5s" , "BCP" ) ;
       fprintf( otp , "%5s" , xc[ind] ) ;
 
-      fprintf( otp , "%5d" , ind % 100000 + 1 ) ;
+      fprintf( otp , "%5d" , (ind + 1) % 100000 ) ;
 
       for ( j=0 ; j<Dim ; j++ )
         fprintf( otp , "%8.3lf" , x[ind][j] / 10.0 ) ;
@@ -604,11 +604,11 @@ void write_gro() {
 
   for ( k=0 ; k<nA ; k++ ) {
     for ( m=0 ; m<Nha ; m++ ) {
-      fprintf( otp , "%5d" , resind % 100000 + 1 ) ;
+      fprintf( otp , "%5d" , (resind + 1) % 100000 ) ;
       fprintf( otp , "%-5s" , "HA" ) ;
       fprintf( otp , "%5s" , xc[ind] ) ;
 
-      fprintf( otp , "%5d" , ind % 100000 + 1 ) ;
+      fprintf( otp , "%5d" , (ind + 1) % 100000 ) ;
 
       for ( j=0 ; j<Dim ; j++ )
         fprintf( otp , "%8.3lf" , x[ind][j] / 10.0 ) ;
@@ -625,11 +625,11 @@ void write_gro() {
 
   for ( k=0 ; k<nB ; k++ ) {
     for ( m=0 ; m<Nhb ; m++ ) {
-      fprintf( otp , "%5d" , resind % 100000 + 1 ) ;
+      fprintf( otp , "%5d" , (resind + 1) % 100000 ) ;
       fprintf( otp , "%-5s" , "HB" ) ;
       fprintf( otp , "%5s" , xc[ind] ) ;
 
-      fprintf( otp , "%5d" , ind % 100000 + 1 ) ;
+      fprintf( otp , "%5d" , (ind + 1) % 100000 ) ;
 
       for ( j=0 ; j<Dim ; j++ )
         fprintf( otp , "%8.3lf" , x[ind][j] / 10.0 ) ;
@@ -645,11 +645,11 @@ void write_gro() {
   }
 
   for ( k=0 ; k<nP ; k++ ) {
-    fprintf( otp , "%5d" , resind % 100000 + 1 ) ;
+    fprintf( otp , "%5d" , (resind + 1) % 100000 ) ;
     fprintf( otp , "%-5s" , "GP" ) ;
     fprintf( otp , "%5s" , xc[ind] ) ;
 
-    fprintf( otp , "%5d" , ind % 100000 + 1 ) ;
+    fprintf( otp , "%5d" , (ind + 1) % 100000 ) ;
 
     for ( j=0 ; j<Dim ; j++ )
       fprintf( otp , "%8.3lf" , x[ind][j] / 10.0 ) ;
@@ -662,11 +662,11 @@ void write_gro() {
     ind++ ;
 
     for ( i=0 ; i<ng_per_partic * ( Ng+1 ) ; i++ ) {
-      fprintf( otp , "%5d" , resind % 100000 + 1 ) ;
+      fprintf( otp , "%5d" , (resind + 1) % 100000 ) ;
       fprintf( otp , "%-5s" , "GP" ) ;
       fprintf( otp , "%5s" , xc[ind] ) ;
 
-      fprintf( otp , "%5d" , ind % 100000 + 1 ) ;
+      fprintf( otp , "%5d" , (ind + 1) % 100000 ) ;
 
       for ( j=0 ; j<Dim ; j++ )
         fprintf( otp , "%8.3lf" , x[ind][j] / 10.0 ) ;
