@@ -37,19 +37,21 @@ void update_positions() {
 
       x[i][j] = 2.0*verlet_b[ tp[i] ]*x[i][j] - verlet_a[ tp[i] ]*x_bac[i][j] + verlet_b[ tp[i] ]*delt_2*f[i][j]/tmp_pm + verlet_b[ tp[i] ]*delt*sqrt( 2.0/Diff[ tp[i] ] * delt )*(tmp_gn+gn_bac[i][j])/2.0/tmp_pm;
 
-      while ( x[i][j] >= L[j] ) {
+      if ( x[i][j] > L[j] ) {
         x[i][j] -= L[j] ;
         if (x[i][j] > L[j]) {
           printf("Particle %d is out of bounds (x[%d][%d] = %lf).\n",
                  i, i, j, x[i][j]);
+          die("Try reducing timestep.\n");
         }
       }
 
-      while ( x[i][j] < 0.0 ) {
+      else if ( x[i][j] < 0.0 ) {
         x[i][j] += L[j] ;
         if (x[i][j] < 0) {
           printf("Particle %d is out of bounds (x[%d][%d] = %lf).\n",
                  i, i, j, x[i][j]);
+          die("Try reducing timestep.\n");
         }
       }
 
