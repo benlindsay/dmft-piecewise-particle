@@ -44,6 +44,9 @@ int main( int argc , char** argv ) {
   // Save chi for pre-equilibration steps //
   double tmp_ang,chi_bkp = chiAB ;
   double eps_bkp = eps ;
+  double delt_bkp = delt ;
+  double kappa_bkp = kappa ;
+  double kappa_p_bkp = kappa_p ;
 
   FILE *otp ;
   //otp = fopen( "data.dat" , "w" ) ;
@@ -59,12 +62,17 @@ int main( int argc , char** argv ) {
   for ( step = 0 ; step < nsteps ; step++ )  {
 
 
-    if ( step < 5000 && eps_flag == 1 )
+    if ( step < sample_wait && eps_flag == 1 ) {
+      delt = 0.0002 ;
       eps = 0.0 ;
-    else
+      kappa = kappa_p = 10;
+    }
+    else {
       eps = eps_bkp ;
-
-
+      delt = delt_bkp ;
+      kappa = kappa_bkp ;
+      kappa_p = kappa_p_bkp ;
+    }
 
     forces() ;
     if(sigma>0){
