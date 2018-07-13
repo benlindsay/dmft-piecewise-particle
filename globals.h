@@ -40,7 +40,7 @@ double n_samples_iter, n_samples, phi_filler, phi_M, ***W_tsn,***vir_func,***vir
 #ifndef MAIN
 extern
 #endif
-int eps_flag, rst_para,uni_sig,nstot, *tp, nA, nB, nD, Nha, Nhb, Nda, Ndb,
+int RAN_NUM, eps_flag, rst_para,uni_sig,nstot, *tp, nA, nB, nD, Nha, Nhb, Nda, Ndb,
     Nx[Dim], M, nsteps, step, print_freq , nsD, nsA, nsB, 
     **grid_inds, pmeorder, spline_weights, lagrange_weights, 
     grid_per_partic, ntypes , stress_freq , buff_size, buff_ind ,

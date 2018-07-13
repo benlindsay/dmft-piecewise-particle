@@ -102,7 +102,8 @@ void read_input( void ) {
   fscanf( inp , "%d %d" , &sample_wait , &sample_freq ) ;
   fgets( tt , 80 , inp ) ;
   fscanf( inp , "%d" , &stress_freq ) ;
-  printf("stress_freq: %d\n" , stress_freq ) ;
+  fgets( tt , 80 , inp ) ;
+  fscanf( inp , "%d" , &RAN_NUM ) ; fgets( tt , 80 , inp ) ;
   fclose( inp ) ;
 
 

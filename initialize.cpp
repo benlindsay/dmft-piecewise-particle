@@ -10,9 +10,12 @@ void read_input( void ) ;
 void initialize() {
   int i,j ;
 
-  idum =   -long( time(0) ) ; // 9 ; //
+  //idum =   -long( time(0) ) ; // 9 ; //
+ 
 
   read_input() ;
+  idum =   -long( RAN_NUM ) ;
+  cout << RAN_NUM << endl;
 
   if ( phiP + phiHA + phiHB > 1.0 )
     die("Invalid volume fractions!\n") ;
