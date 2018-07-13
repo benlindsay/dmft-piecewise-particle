@@ -703,12 +703,22 @@ void bias_config( void ) {
 
   for ( k=0 ; k<nD ; k++ ) {
     //x[ind][0] = ran2() * L[0];
-    x[ind][0] = L[0] - ran2() * L[0] * (1.0-(3.0*phi_filler)) - (L[0] * (3.0*phi_filler))/2.0 + L[0]/2.0;
-    x[ind][1] = L[1] - ran2() * L[1] * (1.0-(3.0*phi_filler)) - (L[1] * (3.0*phi_filler))/2.0 + L[1]/2.0;
+    x[ind][0] = ran2() * L[0] * phi_M - (L[0] * phi_M)/2.0; 
+    x[ind][1] = ran2() * L[1] * phi_M - (L[1] * phi_M)/2.0;
     //x[ind][2] = (ran2() * (L[2]/2.0 - sqrt_nP * (Rp)) + sqrt_nP * (Rp+Rg))* sin(ran2() * 2.0 * PI) + L[2]/2.0;
     x[ind][2] = ran2() * L[2] * phi_M - (L[2] * phi_M)/2.0;
     //x[ind][2] = ran2() * L[2] ;
+    
+    if ( x[ind][0] > L[0] )
+      x[ind][0] -= L[0] ;
+    else if ( x[ind][j] < 0.0 )
+      x[ind][0] += L[0] ;
 
+    if ( x[ind][1] > L[1] )
+      x[ind][1] -= L[1] ;
+    else if ( x[ind][j] < 0.0 )
+      x[ind][1] += L[1] ;
+    
     if ( x[ind][2] > L[2] )
       x[ind][2] -= L[2] ;
     else if ( x[ind][j] < 0.0 )
@@ -798,13 +808,25 @@ void bias_config( void ) {
     double u[Dim] ;
 
 
-    //x[ind][0] = ran2() * L[0];
-    x[ind][0] = ran2() * L[0] * phi_filler - (L[0]*phi_filler)/2.0 + L[0]/2.0;
-    x[ind][1] = ran2() * L[1] * phi_filler - (L[1]*phi_filler)/2.0 + L[1]/2.0;
-    //x[ind][2] = ran2() * sqrt_nP * (Rp) * sin(ran2() * 2.0 * PI) + L[2]/2.0;
+    //x[ind][0] = ran2() * L[0];  
+    //x[ind][0] = ran2() * L[0] * phi_filler - (L[0]*phi_filler)/2.0 + L[0]/2.0;
+    //x[ind][1] = ran2() * L[1] * phi_filler - (L[1]*phi_filler)/2.0 + L[1]/2.0;
+    //x[ind][2] = ran2() * sqrt_nP * (Rp) * sin(ran2() * 2.0 * PI) + L[2]/2.0;  
+    x[ind][0] = L[0] - ran2() * L[0] * (1.0-phi_M)  - (L[0]*phi_M)/2.0;
+    x[ind][1] = L[1] - ran2() * L[1] * (1.0-phi_M)  - (L[1]*phi_M)/2.0;
     x[ind][2] = L[2] - ran2() * L[2] * (1.0-phi_M)  - (L[2]*phi_M)/2.0;
     //x[ind][2] = L[2] * ran2() ;
 
+    if ( x[ind][0] > L[0] )
+      x[ind][0] -= L[0] ;
+    else if ( x[ind][j] < 0.0 )
+      x[ind][0] += L[0] ;
+
+    if ( x[ind][1] > L[1] )
+      x[ind][1] -= L[1] ;
+    else if ( x[ind][j] < 0.0 )
+      x[ind][1] += L[1] ;
+    
     if ( x[ind][2] > L[2] )
       x[ind][2] -= L[2] ;
     else if ( x[ind][j] < 0.0 )
