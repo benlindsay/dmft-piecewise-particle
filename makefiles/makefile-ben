@@ -1,7 +1,7 @@
-CC = icpc
+CC = g++
 #CFLAGS = -pg -fopenmp
-CFLAGS = -O3 -qopenmp -Wall -I$(TACC_FFTW3_INC)
-LIBS = -lm -lfftw3_omp -lfftw3 -lpthread -L$(TACC_FFTW3_LIB)
+CFLAGS = -O3 -fopenmp -Wall -I$(FFTW_OPENMP)/include
+LIBS = -lm -lfftw3_omp -lfftw3 -lpthread -L$(FFTW_OPENMP)/lib
 
 
 #############################################################################
