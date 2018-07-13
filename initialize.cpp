@@ -258,29 +258,29 @@ void initialize_potential( ) {
       fftw_fwd( vir_funcpg[j][j2], vir_funcpg_hat[j][j2] ) ;
     }
 
-  write_grid_data( "ug.dat" , uG ) ;
-  write_grid_data( "up.dat" , uP ) ;
-  write_grid_data( "upg.dat" , uPG ) ;
-  write_grid_data( "uag.dat" , uAG ) ;
+  //write_grid_data( "ug.dat" , uG ) ;
+  //write_grid_data( "up.dat" , uP ) ;
+  //write_grid_data( "upg.dat" , uPG ) ;
+  //write_grid_data( "uag.dat" , uAG ) ;
 
 
   for ( j=0 ; j<Dim ; j++ ) {
     char nm[20] ;
     fftw_fwd( grad_uG[j] , grad_uG_hat[j] ) ;
-    sprintf( nm , "grad_ug_%d.dat" , j ) ;
-    write_grid_data( nm , grad_uG[j] ) ;
+    //sprintf( nm , "grad_ug_%d.dat" , j ) ;
+    //write_grid_data( nm , grad_uG[j] ) ;
 
     fftw_fwd( grad_uP[j] , grad_uP_hat[j] ) ;
-    sprintf( nm , "grad_up_%d.dat" , j ) ;
-    write_grid_data( nm , grad_uP[j] ) ;
+    //sprintf( nm , "grad_up_%d.dat" , j ) ;
+    //write_grid_data( nm , grad_uP[j] ) ;
 
     fftw_fwd( grad_uPG[j] , grad_uPG_hat[j] ) ;
-    sprintf( nm , "grad_upg_%d.dat" , j ) ;
-    write_grid_data( nm , grad_uPG[j] ) ;
-
+    //sprintf( nm , "grad_upg_%d.dat" , j ) ;
+    //write_grid_data( nm , grad_uPG[j] ) ;
+    
     fftw_fwd( grad_uAG[j] , grad_uAG_hat[j] ) ;
-    sprintf( nm , "grad_uag_%d.dat" , j ) ;
-    write_grid_data( nm , grad_uAG[j] ) ;
+    //sprintf( nm , "grad_uag_%d.dat" , j ) ;
+    //write_grid_data( nm , grad_uAG[j] ) ;
   }
 }
 
