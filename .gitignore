@@ -5,4 +5,4 @@ dmft
 test*
 .tags
 makefile
-
+*.exe
