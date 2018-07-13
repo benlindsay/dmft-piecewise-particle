@@ -28,3 +28,4 @@
 0 25000  sample_wait, sample_freq
 0          stress_frequency
 200        RAN_NUM
+1          charge_freq

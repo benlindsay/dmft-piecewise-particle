@@ -103,7 +103,9 @@ void read_input( void ) {
   fgets( tt , 80 , inp ) ;
   fscanf( inp , "%d" , &stress_freq ) ;
   fgets( tt , 80 , inp ) ;
-  fscanf( inp , "%d" , &RAN_NUM ) ; fgets( tt , 80 , inp ) ;
+  fscanf( inp , "%d" , &RAN_NUM ) ;
+  fgets( tt , 80 , inp ) ;
+  fscanf( inp , "%d" , &charge_freq ) ;
   fclose( inp ) ;
 
 

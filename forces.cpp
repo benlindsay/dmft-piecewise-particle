@@ -7,7 +7,9 @@ void forces() {
 
   int i,j, m, gind, t1, t2 ;
 
-  charge_grid() ;
+  if (step % charge_freq == 0) {
+    charge_grid() ;
+  }
 
   ///////////////////////////////////////////////
   // Reset the particle forces and grid grad w //
