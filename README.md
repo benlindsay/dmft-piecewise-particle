@@ -5,7 +5,7 @@
 1. Clone the repo:
 
 ```
-git clone https://benlindsay@bitbucket.org/benlindsay/dmft-biased-vdw.git
+git clone https://github.com/benlindsay/dmft-biased-vdw
 ```
 
 2. Make `.env` file:
