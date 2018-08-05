@@ -1,6 +1,6 @@
 CC          = icpc
 #CFLAGS     = -pg -fopenmp
-FFTW_OPENMP = $(shell source ./.env && echo $$FFTW_OPENMP)
+FFTW_OPENMP = /projects/netpub/fftw_openmp/3.3.4
 CFLAGS      = -O3 -openmp -math -Wall -I$(FFTW_OPENMP)/include
 LIBS        = -openmp  -lm  -O3 -lfftw3_omp -lfftw3 -lpthread -L$(FFTW_OPENMP)/lib
 TARGET      = $(shell echo dmft-$$(git describe --tags))

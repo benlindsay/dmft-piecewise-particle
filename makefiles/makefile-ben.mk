@@ -1,5 +1,4 @@
 CC          = g++
-FFTW_OPENMP = $(shell source ./.env && echo $$FFTW_OPENMP)
 CFLAGS      = -O3 -fopenmp -Wall -I$(FFTW_OPENMP)/include
 LIBS        = -lm -lfftw3_omp -lfftw3 -lpthread -L$(FFTW_OPENMP)/lib
 TARGET      = $(shell echo dmft-$$(git describe --tags))
