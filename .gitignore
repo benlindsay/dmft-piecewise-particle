@@ -1,8 +1,9 @@
 *.o
 *.out
 *.dat
-dmft
+dmft*
 test*
 .tags
 makefile
 *.exe
+.env
