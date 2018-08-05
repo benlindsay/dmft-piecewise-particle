@@ -13,6 +13,7 @@
 17.74583 rho0, in units normalized by diblock properties
 0         chi, 
 0  eps
+0.65         well_shift
 50.0 50.0    kappa, 
 1.0 1.0 5.0 5.0  Monomer mobility/diffusion coefficients
 

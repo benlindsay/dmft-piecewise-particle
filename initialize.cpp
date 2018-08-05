@@ -205,7 +205,7 @@ void initialize_potential( ) {
     tmp[i] = rho0 / 2.0 * ( 1.0 - erf( ( mdr - Rp ) / Xi ) ) * V;
     gammaP[i] = tmp[i] ;
 
-    gamma_sig[i] = V * rho0 * exp( - (mdr-Rp-2.0)*(mdr-Rp-2.0) / Xi);
+    gamma_sig[i] = V * rho0 * exp( - (mdr-Rp-well_shift)*(mdr-Rp-well_shift) / Xi);
   }
 
   // Set up the particle-particle potential //

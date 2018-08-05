@@ -59,6 +59,9 @@ void read_input( void ) {
   fscanf( inp , "%lf" , &eps ) ;
   fgets( tt , 80 , inp ) ;
 
+  fscanf( inp , "%lf" , &well_shift ) ;
+  fgets( tt , 80 , inp ) ;
+
   fscanf( inp , "%lf %lf" , &kappa ,&kappa_p) ;
   fgets( tt , 80 , inp ) ;
   cout<<"kappa "<<kappa<<" "<<kappa_p<<endl;
