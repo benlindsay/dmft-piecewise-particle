@@ -8,7 +8,7 @@ void random_u( double* ) ;
 void random_config( void ) ;
 void write_gro( void ) ;
 void read_gro( FILE* ) ;
-void bias_config( void ) ;
+void random_config( void ) ;
 void read_quaternions(FILE *);
 
 
@@ -21,7 +21,7 @@ void initialize_configuration( ) {
   inp2 = fopen( "input_q.gro" , "r" ) ;
   //cout<<"here reach "<<endl;
   if ( inp == NULL || inp2 ==NULL){
-    bias_config() ;
+    random_config() ;
     //calc_A();
     rst_para = 0 ;
     eps_flag = 1 ;
@@ -693,7 +693,7 @@ void write_gro() {
 
 }
 
-void bias_config( void ) {
+void random_config( void ) {
 
   int i, m, j, k, ind = 0 ;
   int tmp_dr[Dim];
@@ -812,9 +812,9 @@ void bias_config( void ) {
     //x[ind][0] = ran2() * L[0] * phi_filler - (L[0]*phi_filler)/2.0 + L[0]/2.0;
     //x[ind][1] = ran2() * L[1] * phi_filler - (L[1]*phi_filler)/2.0 + L[1]/2.0;
     //x[ind][2] = ran2() * sqrt_nP * (Rp) * sin(ran2() * 2.0 * PI) + L[2]/2.0;  
-    x[ind][0] = L[0] - ran2() * L[0] * (1.0-phi_M)  - (L[0]*phi_M)/2.0;
-    x[ind][1] = L[1] - ran2() * L[1] * (1.0-phi_M)  - (L[1]*phi_M)/2.0;
-    x[ind][2] = L[2] - ran2() * L[2] * (1.0-phi_M)  - (L[2]*phi_M)/2.0;
+    x[ind][0] = L[0] * ran2();
+    x[ind][1] = L[1] * ran2();
+    x[ind][2] = L[2] * ran2();
     //x[ind][2] = L[2] * ran2() ;
 
     if ( x[ind][0] > L[0] )
