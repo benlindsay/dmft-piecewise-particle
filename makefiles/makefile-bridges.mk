@@ -2,7 +2,8 @@ CC = icpc
 #CFLAGS = -pg -fopenmp
 CFLAGS = -O3 -fopenmp -Wall -I$(FFTW3_INCLUDE)
 LIBS = -lm -lfftw3_omp -lfftw3 -lpthread -L$(FFTW3_LIB)
-TARGET      = $(shell echo dmft-$$(git describe --tags))
+DIM       = $(shell grep -e "^\#define Dim" globals.h | awk '{print $$NF}')
+TARGET      = $(shell echo dmft-$$(git describe --tags)_$(DIM)d)
 
 
 #############################################################################
@@ -19,10 +20,12 @@ OBJS = ${SRCS:.cpp=.o}
 .cpp.o:
 	${CC} ${CFLAGS} ${DFLAGS} -c  $<
 
-$(TARGET):  ${OBJS}
+dmft:  ${OBJS}
 	$(CC) ${CFLAGS} ${DFLAGS} -o $@ ${OBJS} $(LIBS)
 
+commit: dmft
+	cp dmft $(TARGET)
 clean:
 	rm -f *.o
-	rm -f $(TARGET)
+	rm -f dmft
 	rm -f *~
