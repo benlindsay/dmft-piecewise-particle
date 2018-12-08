@@ -109,6 +109,8 @@ void read_input( void ) {
   fscanf( inp , "%d" , &RAN_NUM ) ;
   fgets( tt , 80 , inp ) ;
   fscanf( inp , "%d" , &charge_freq ) ;
+  fgets( tt , 80 , inp ) ;
+  fscanf( inp , "%lf" , &agg_frac ) ;
   fclose( inp ) ;
 
 

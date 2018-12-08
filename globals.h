@@ -35,7 +35,7 @@ double n_samples_iter, n_samples, phi_filler, phi_M, ***W_tsn,***vir_func,***vir
        *gradwA[Dim], *gradwB[Dim], *gradwP[Dim], 
        *uG, *grad_uG[Dim], *uAG, eps, well_shift, *grad_uAG[Dim], *uP, *grad_uP[Dim], *uPG, *grad_uPG[Dim] , mem_use,
        U_chi_gg, U_chi_pg, U_chi_pp, U_kappa_gg, U_kappa_pg, U_kappa_pp,
-       sigma, kgraft, **graft_req, *rhoga, **rhoga_t ;
+       sigma, kgraft, **graft_req, *rhoga, **rhoga_t, agg_frac ;
 
 #ifndef MAIN
 extern

@@ -702,26 +702,23 @@ void random_config( void ) {
   sqrt_nP = sqrt(nP);
 
   for ( k=0 ; k<nD ; k++ ) {
-    //x[ind][0] = ran2() * L[0];
-    x[ind][0] = ran2() * L[0] * phi_M - (L[0] * phi_M)/2.0; 
-    x[ind][1] = ran2() * L[1] * phi_M - (L[1] * phi_M)/2.0;
-    //x[ind][2] = (ran2() * (L[2]/2.0 - sqrt_nP * (Rp)) + sqrt_nP * (Rp+Rg))* sin(ran2() * 2.0 * PI) + L[2]/2.0;
-    x[ind][2] = ran2() * L[2] * phi_M - (L[2] * phi_M)/2.0;
-    //x[ind][2] = ran2() * L[2] ;
+    x[ind][0] = ran2() * L[0];
+    x[ind][1] = ran2() * L[1];
+    x[ind][2] = ran2() * L[2] ;
     
     if ( x[ind][0] > L[0] )
       x[ind][0] -= L[0] ;
-    else if ( x[ind][j] < 0.0 )
+    else if ( x[ind][0] < 0.0 )
       x[ind][0] += L[0] ;
 
     if ( x[ind][1] > L[1] )
       x[ind][1] -= L[1] ;
-    else if ( x[ind][j] < 0.0 )
+    else if ( x[ind][1] < 0.0 )
       x[ind][1] += L[1] ;
     
     if ( x[ind][2] > L[2] )
       x[ind][2] -= L[2] ;
-    else if ( x[ind][j] < 0.0 )
+    else if ( x[ind][2] < 0.0 )
       x[ind][2] += L[2] ;
 
     tp[ ind ] = ( Nda > 0 ? 0 : 1 ) ;
@@ -812,9 +809,19 @@ void random_config( void ) {
     //x[ind][0] = ran2() * L[0] * phi_filler - (L[0]*phi_filler)/2.0 + L[0]/2.0;
     //x[ind][1] = ran2() * L[1] * phi_filler - (L[1]*phi_filler)/2.0 + L[1]/2.0;
     //x[ind][2] = ran2() * sqrt_nP * (Rp) * sin(ran2() * 2.0 * PI) + L[2]/2.0;  
-    x[ind][0] = L[0] * ran2();
-    x[ind][1] = L[1] * ran2();
-    x[ind][2] = L[2] * ran2();
+    double center_box_x = pow(agg_frac * (1 - phi_M), 1.0/Dim);
+    if (double(k) / double(nP) < agg_frac) {
+      x[ind][0] = L[0] * (0.5 + center_box_x * (ran2() - 0.5));
+      x[ind][1] = L[1] * (0.5 + center_box_x * (ran2() - 0.5));
+      x[ind][2] = L[2] * (0.5 + center_box_x * (ran2() - 0.5));
+      // x[ind][0] = L[0] - ran2() * L[0] * (1.0-phi_M)  - (L[0]*phi_M)/2.0;
+      // x[ind][1] = L[1] - ran2() * L[1] * (1.0-phi_M)  - (L[1]*phi_M)/2.0;
+      // x[ind][2] = L[2] - ran2() * L[2] * (1.0-phi_M)  - (L[2]*phi_M)/2.0;
+    } else {
+      x[ind][0] = L[0] * ran2();
+      x[ind][1] = L[1] * ran2();
+      x[ind][2] = L[2] * ran2();
+    }
     //x[ind][2] = L[2] * ran2() ;
 
     if ( x[ind][0] > L[0] )
