@@ -63,38 +63,36 @@ void forces() {
     }
   }
 
-  if ( eps != 0.0 ) {
-    // P pulling on A //
-    fftw_fwd( rho[2] , ktmp ) ;
+  // P pulling on A //
+  fftw_fwd( rho[2] , ktmp ) ;
 
-    for ( j=0 ; j<Dim ; j++ ) {
+  for ( j=0 ; j<Dim ; j++ ) {
 #pragma omp parallel for
-      for ( i=0 ; i<M ; i++ )
-        ktmp2[i] = grad_uAG_hat[j][i] * ktmp[i] ;
+    for ( i=0 ; i<M ; i++ )
+      ktmp2[i] = grad_uAG_hat[j][i] * ktmp[i] ;
 
-      fftw_back( ktmp2 , tmp ) ;
+    fftw_back( ktmp2 , tmp ) ;
 
 #pragma omp parallel for
-      for ( i=0 ; i<M ; i++ )
-        gradwA[j][i] -= tmp[i] * eps/rho0 ;
-    }
+    for ( i=0 ; i<M ; i++ )
+      gradwA[j][i] += tmp[i];
+      // gradwA[j][i] -= tmp[i] * eps/rho0 ;
   }
 
-  if (eps != 0.0) {
-    // A pulling on P //
-    fftw_fwd( rho[0] , ktmp ) ;
+  // A pulling on P //
+  fftw_fwd( rho[0] , ktmp ) ;
 
-    for ( j=0 ; j<Dim ; j++ ) {
+  for ( j=0 ; j<Dim ; j++ ) {
 #pragma omp parallel for
-      for ( i=0 ; i<M ; i++ )
-        ktmp2[i] = grad_uAG_hat[j][i] * ktmp[i] ;
+    for ( i=0 ; i<M ; i++ )
+      ktmp2[i] = grad_uAG_hat[j][i] * ktmp[i] ;
 
-      fftw_back( ktmp2 , tmp ) ;
+    fftw_back( ktmp2 , tmp ) ;
 
 #pragma omp parallel for
-      for ( i=0 ; i<M ; i++ )
-        gradwP[j][i] -= tmp[i] * eps/rho0 ;
-    }
+    for ( i=0 ; i<M ; i++ )
+      gradwP[j][i] += tmp[i];
+      // gradwP[j][i] -= tmp[i] * eps/rho0 ;
   }
 
   // Compressibility contribution //
@@ -142,7 +140,7 @@ void forces() {
           gradwP[j][i] += tmp[i] * kappa_p / rho0 ;
       }
     }//nP>1
-    // Particles acting on monomers //
+    // Particles acting on B monomers //
     for ( j=0 ; j<Dim ; j++ ) {
 #pragma omp parallel for
       for ( i=0 ; i<M ; i++ )
@@ -152,30 +150,9 @@ void forces() {
 
 #pragma omp parallel for
       for ( i=0 ; i<M ; i++ ) {
-        gradwA[j][i] += tmp[i] * kappa / rho0 ;
+        // gradwA[j][i] += tmp[i] * kappa / rho0 ;
         gradwB[j][i] += tmp[i] * ( kappa + ( A_partics ? chiAB : 0.0 ) ) / rho0 ;
       }
-    }
-
-    // A Monomers acting on particles //
-#pragma omp parallel for
-    for ( i=0 ; i<M ; i++ )
-      tmp[i] = rho[0][i] -rho0 ;
-
-
-    fftw_fwd( tmp , ktmp ) ;
-    for ( j=0 ; j<Dim ; j++ ) {
-
-#pragma omp parallel for
-      for ( i=0 ; i<M ; i++ )
-        ktmp2[i] = grad_uPG_hat[j][i] * ktmp[i] ;
-
-      fftw_back( ktmp2 , tmp ) ;
-
-#pragma omp parallel for
-      for ( i=0 ; i<M ; i++ )
-        gradwP[j][i] += tmp[i] * kappa / rho0 ;
-
     }
 
     // B Monomers acting on particles //

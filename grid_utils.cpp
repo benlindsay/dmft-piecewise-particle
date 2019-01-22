@@ -15,7 +15,7 @@ void charge_grid( ) {
     for ( j=0 ; j<ntypes ; j++ )
       rho[j][i] = 0.0 ;
 
-#pragma omp parallel for
+#pragma omp parallel for private(j)
   for ( i=0 ; i<M ; i++ ) {
     rhoda[i] = rhoha[i] = rhodb[i] = rhohb[i] = rhop[i] = smrhop[i] = rhoga[i] = 0.0 ;
     for ( j=0 ; j<nthreads ; j++ )
@@ -409,4 +409,3 @@ void spline_get_weights( double dx , double H , double *W ) {
     die("P3M not set up for this interpolation order!\n");
 
 }
-
