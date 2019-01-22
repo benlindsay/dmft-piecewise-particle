@@ -14,7 +14,7 @@ SRCS = time.cpp stress.cpp main.cpp matrix.cpp array_utils.cpp die.cpp \
        random.cpp grid_utils.cpp torque.cpp quanterions.cpp fftw_wrappers.cpp \
        initialize.cpp config_utils.cpp io_utils.cpp update_euler.cpp \
        update_positions.cpp forces.cpp integ_utils.cpp read_input.cpp \
-       bonded.cpp calc_unb.cpp 
+       bonded.cpp calc_unb.cpp initialize_piecewise_coeffs.cpp
        
 OBJS = ${SRCS:.cpp=.o}
 

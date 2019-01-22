@@ -3,6 +3,8 @@ void allocate( void ) ;
 void calc_A(void) ;
 void fft_init( void ) ;
 void initialize_potential( void ) ;
+void initialize_piecewise_coeffs(double*, double, double, double, double,
+                                 double) ;
 void initialize_configuration( void ) ;
 void charge_grid( void ) ;
 void read_input( void ) ;
@@ -180,6 +182,37 @@ void initialize() {
   printf("potentials initialized, written\n") ; fflush( stdout ) ;
 }
 
+void initialize_piecewise_function(double *data, double depth, double height,
+                                   double Rp, double Xi, double well_shift) {
+  double coeffs[4], ro[Dim], rc[Dim], dr[Dim];
+  initialize_piecewise_coeffs(coeffs, depth, height, Rp, Xi, well_shift);
+
+  for ( int j=0 ; j<Dim ; j++ )
+    ro[j] = 0.0 ;
+
+  for (int i=0 ; i<M ; i++ ) {
+    get_r( i , rc ) ;
+    double mdr2 = pbc_mdr2( ro, rc, dr ) ;
+    double mdr = sqrt( mdr2 ) ;
+
+    double mdr3 = mdr2 * mdr;
+    if (mdr < Rp) {
+      data[i] = kappa / 2.0 * erfc( ( mdr - Rp ) / Xi );
+    } else if (Rp < mdr && mdr < Rp + well_shift) {
+      data[i] = coeffs[0] +
+                coeffs[1] * mdr + 
+                coeffs[2] * mdr2 +
+                coeffs[3] * mdr3;
+    } else {
+      double lj_minimum_r = pow(2.0, 1.0/6.0) * Rp;
+      double r_shift = Rp + well_shift - lj_minimum_r;
+      double s_over_r6 = pow(Rp / (mdr - r_shift), 6);
+      double s_over_r12 = s_over_r6 * s_over_r6;
+      data[i] = 4.0 * eps * (s_over_r12 - s_over_r6);
+    }
+  }
+}
+
 
 
 void initialize_potential( ) {
@@ -187,6 +220,10 @@ void initialize_potential( ) {
   int i, j;
 
   double ro[Dim], rc[Dim], dr[Dim], mdr2 , pref , mdr , k2, kv[Dim] ;
+  // Note: the factor of V is for the FFT
+  initialize_piecewise_function(gammaP, 0.0, rho0 * V, Rp, Xi, well_shift);
+  initialize_piecewise_function(uAG, eps * V, kappa_p * V, Rp, Xi, well_shift);
+  initialize_piecewise_function(uPG, 0.0, rho0 * V, Rp, Xi, well_shift);
   pref = V / ( pow( 2.0 * sqrt(PI) *Range, Dim ) ) ; // Note: the factor of V comes from the FFT
 
   for ( j=0 ; j<Dim ; j++ )
@@ -201,33 +238,33 @@ void initialize_potential( ) {
 
     uG[i] = exp( -mdr2 / 4.0/Range2 ) * pref ;
     r_dudr[i] = -mdr2 * exp( -mdr2 / 4.0/Range2 ) ;
+    // gammaP[i] = tmp[i];
 
-    tmp[i] = rho0 / 2.0 * ( 1.0 - erf( ( mdr - Rp ) / Xi ) ) * V;
-    gammaP[i] = tmp[i] ;
-
-    gamma_sig[i] = V * rho0 * exp( - (mdr-Rp-well_shift)*(mdr-Rp-well_shift) / Xi);
+    // gamma_sig[i] = V * rho0 * exp( - (mdr-Rp-well_shift)*(mdr-Rp-well_shift) / Xi);
   }
 
+  write_grid_data( "gammaP.dat" , gammaP ) ;
+
   // Set up the particle-particle potential //
-  fftw_fwd( tmp , ktmp ) ;
+  fftw_fwd( gammaP , ktmp ) ;
   for ( i=0 ; i<M ; i++ )
     ktmp2[i] = ktmp[i] * ktmp[i] ;
   fftw_back( ktmp2 , uP ) ;
 
   // Set up particle-polymer potential //
-  for ( i=0 ; i<M ; i++ ) {
-    k2 = get_k( i , kv ) ;
-    ktmp[i] *= exp( -Range2*k2 /2.0) ;
-  }
-  fftw_back( ktmp , uPG ) ;
+  // for ( i=0 ; i<M ; i++ ) {
+  //   k2 = get_k( i , kv ) ;
+  //   ktmp[i] *= exp( -Range2*k2 /2.0) ;
+  // }
+  // fftw_back( ktmp , uPG ) ;
 
   // Set up adsorbing-polymer potential //
-  fftw_fwd(gamma_sig,ktmp);
-  for ( i=0 ; i<M ; i++ ) {
-    k2 = get_k( i , kv ) ;
-    ktmp[i] *= exp( -Range2*k2 /2.0) ;
-  }
-  fftw_back( ktmp , uAG ) ;
+  // fftw_fwd(gamma_sig,ktmp);
+  // for ( i=0 ; i<M ; i++ ) {
+  //   k2 = get_k( i , kv ) ;
+  //   ktmp[i] *= exp( -Range2*k2 /2.0) ;
+  // }
+  // fftw_back( ktmp , uAG ) ;
 
   for ( j=0 ; j<Dim ; j++ ) {
     field_gradient( uG , grad_uG[j] , j ) ;
@@ -258,10 +295,10 @@ void initialize_potential( ) {
       fftw_fwd( vir_funcpg[j][j2], vir_funcpg_hat[j][j2] ) ;
     }
 
-  //write_grid_data( "ug.dat" , uG ) ;
-  //write_grid_data( "up.dat" , uP ) ;
-  //write_grid_data( "upg.dat" , uPG ) ;
-  //write_grid_data( "uag.dat" , uAG ) ;
+  write_grid_data( "ug.dat" , uG ) ;
+  write_grid_data( "up.dat" , uP ) ;
+  write_grid_data( "upg.dat" , uPG ) ;
+  write_grid_data( "uag.dat" , uAG ) ;
 
 
   for ( j=0 ; j<Dim ; j++ ) {
