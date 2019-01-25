@@ -75,7 +75,7 @@ void forces() {
 
 #pragma omp parallel for
     for ( i=0 ; i<M ; i++ )
-      gradwA[j][i] += tmp[i];
+      gradwA[j][i] -= tmp[i];
       // gradwA[j][i] -= tmp[i] * eps/rho0 ;
   }
 
@@ -91,7 +91,7 @@ void forces() {
 
 #pragma omp parallel for
     for ( i=0 ; i<M ; i++ )
-      gradwP[j][i] += tmp[i];
+      gradwP[j][i] -= tmp[i];
       // gradwP[j][i] -= tmp[i] * eps/rho0 ;
   }
 
