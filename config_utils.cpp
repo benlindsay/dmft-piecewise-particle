@@ -805,7 +805,8 @@ void random_config( void ) {
     double u[Dim] ;
 
 
-    double center_box_x = agg_frac * (1 - phi_M);
+    double expected_packing_factor = 0.5;
+    double center_box_x = 1.0 / expected_packing_factor * agg_frac * (1 - phi_M);
     x[ind][0] = L[0] * ran2();
     x[ind][1] = L[1] * ran2();
     if (double(k) / double(nP) < agg_frac) {
