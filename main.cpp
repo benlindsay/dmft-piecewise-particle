@@ -143,17 +143,7 @@ int main( int argc , char** argv ) {
       //if ( stress_freq > 0 )
       //  write_stress() ;
 
-      if ( step > sample_wait && step % sample_freq == 0 ) {
-        if (step % avg_freq == 0) {
-          n_samples_iter = 0.0;
-          avg_iter += 1;
-          for (i=0; i<M; i++) {
-            avg_rhoga_iter[i] = 0.0;
-            avg_rhoda_iter[i] = 0.0;
-            avg_rhodb_iter[i] = 0.0;
-            avg_rhop_iter[i] = 0.0;
-          }
-        }
+      if ( step >= sample_wait && (step + 1 - sample_wait) % sample_freq == 0 ) {
         n_samples += 1.0 ;
         n_samples_iter += 1.0 ;
         for ( i=0 ; i<M ; i++ ) {
@@ -179,6 +169,7 @@ int main( int argc , char** argv ) {
           write_avg_grid_data_iter( "avg_rhodb" , avg_rhodb_iter ) ;
         }
         if (nP > 0.0) {
+          cout << "step = " << step << ". Writing avg " << avg_iter << endl;
           write_avg_grid_data( "avg_rhop.dat" , avg_rhop ) ;
           write_avg_grid_data_iter( "avg_rhop" , avg_rhop_iter ) ;
           fftw_fwd(avg_rhop, ktmp);
@@ -196,6 +187,17 @@ int main( int argc , char** argv ) {
           fftw_back(ktmp, avg_smrhop_iter);
           write_avg_grid_data( "avg_smrhop.dat" , avg_smrhop ) ;
           write_avg_grid_data_iter( "avg_smrhop" , avg_smrhop_iter ) ;
+        }
+        if ((step + 1 - sample_wait) % avg_freq == 0) {
+          n_samples_iter = 0.0;
+          avg_iter += 1;
+          cout << "step = " << step << ". avg_iter = " << avg_iter << endl;
+          for (i=0; i<M; i++) {
+            avg_rhoga_iter[i] = 0.0;
+            avg_rhoda_iter[i] = 0.0;
+            avg_rhodb_iter[i] = 0.0;
+            avg_rhop_iter[i] = 0.0;
+          }
         }
       }
 
