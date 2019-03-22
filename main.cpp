@@ -181,6 +181,21 @@ int main( int argc , char** argv ) {
         if (nP > 0.0) {
           write_avg_grid_data( "avg_rhop.dat" , avg_rhop ) ;
           write_avg_grid_data_iter( "avg_rhop" , avg_rhop_iter ) ;
+          fftw_fwd(avg_rhop, ktmp);
+#pragma omp parallel for
+          for(i=0; i<M; i++) {
+            ktmp[i] *= gammaP_hat[i];
+          }
+          fftw_back(ktmp, avg_smrhop);
+
+          fftw_fwd(avg_rhop_iter, ktmp);
+#pragma omp parallel for
+          for(i=0; i<M; i++) {
+            ktmp[i] *= gammaP_hat[i];
+          }
+          fftw_back(ktmp, avg_smrhop_iter);
+          write_avg_grid_data( "avg_smrhop.dat" , avg_smrhop ) ;
+          write_avg_grid_data_iter( "avg_smrhop" , avg_smrhop_iter ) ;
         }
       }
 

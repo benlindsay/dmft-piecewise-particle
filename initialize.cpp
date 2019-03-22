@@ -246,9 +246,9 @@ void initialize_potential( ) {
   write_grid_data( "gammaP.dat" , gammaP ) ;
 
   // Set up the particle-particle potential //
-  fftw_fwd( gammaP , ktmp ) ;
+  fftw_fwd( gammaP , gammaP_hat ) ;
   for ( i=0 ; i<M ; i++ )
-    ktmp2[i] = ktmp[i] * ktmp[i] ;
+    ktmp2[i] = gammaP_hat[i] * gammaP_hat[i] ;
   fftw_back( ktmp2 , uP ) ;
 
   // Set up particle-polymer potential //
@@ -343,6 +343,7 @@ void allocate( ) {
 
   epslon = (double***) calloc(3, sizeof(double**));
 
+  gammaP_hat = (complex<double>*) calloc(M, sizeof(complex<double>));
   vir_func = ( double*** ) calloc( Dim , sizeof( double**) ) ;
   vir_func_hat = ( complex<double>*** ) calloc( Dim , sizeof( complex<double>**) ) ;
   vir_funcpp = ( double*** ) calloc( Dim , sizeof( double**) ) ;
@@ -541,6 +542,8 @@ void allocate( ) {
   rhop = ( double* ) calloc( M , sizeof( double ) ) ;
   avg_rhop = ( double* ) calloc( M , sizeof( double ) ) ;
   avg_rhop_iter = ( double* ) calloc( M , sizeof( double ) ) ;
+  avg_smrhop = ( double* ) calloc( M , sizeof( double ) ) ;
+  avg_smrhop_iter = ( double* ) calloc( M , sizeof( double ) ) ;
   gammaP = ( double* ) calloc( M , sizeof( double ) ) ;
   gamma_sig = ( double* ) calloc( M , sizeof( double ) ) ;
   smrhop = ( double* ) calloc( M , sizeof( double ) ) ;
