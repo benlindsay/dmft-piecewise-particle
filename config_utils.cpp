@@ -52,17 +52,12 @@ void read_gro( FILE *ip ) {
 
   ind = 0 ;
 
-  int a = 0;
   for ( k=0 ; k<nD ; k++ ) {
     for ( m=0 ; m<Nda + Ndb ; m++ ) {
-      a++;
       fscanf( ip , "%5d" , &di ) ;
-      fscanf( ip , "%s" , tt ) ;
-      fscanf( ip , "%s" , tt ) ;
-      if (a < 10000 )
-        fscanf( ip , "%d" , &di ) ;
-      if (a % 100000 == 0)
-        a = 0;
+      fscanf( ip , "%5s" , tt ) ;
+      fscanf( ip , "%5s" , tt ) ;
+      fscanf( ip , "%5d" , &di ) ;
 
       for ( j=0 ; j<Dim ; j++ ) {
         fscanf( ip , "%lf" , &x[ind][j] ) ;
@@ -87,14 +82,10 @@ void read_gro( FILE *ip ) {
 
   for ( k=0 ; k<nA ; k++ ) {
     for ( m=0 ; m<Nha ; m++ ) {
-      a++;
       fscanf( ip , "%5d" , &di ) ;
-      fscanf( ip , "%s" , tt ) ;
-      fscanf( ip , "%s" , tt ) ;
-      if (a < 10000 )
-        fscanf( ip , "%d" , &di ) ;
-      if (a % 100000 == 0)
-        a = 0;
+      fscanf( ip , "%5s" , tt ) ;
+      fscanf( ip , "%5s" , tt ) ;
+      fscanf( ip , "%5d" , &di ) ;
 
       for ( j=0 ; j<Dim ; j++ ) {
         fscanf( ip , "%lf" , &x[ind][j] ) ;
@@ -117,14 +108,10 @@ void read_gro( FILE *ip ) {
 
   for ( k=0 ; k<nB ; k++ ) {
     for ( m=0 ; m<Nhb ; m++ ) {
-      a++;
       fscanf( ip , "%5d" , &di ) ;
-      fscanf( ip , "%s" , tt ) ;
-      fscanf( ip , "%s" , tt ) ;
-      if (a < 10000 )
-        fscanf( ip , "%d" , &di ) ;
-      if (a % 100000 == 0)
-        a = 0;
+      fscanf( ip , "%5s" , tt ) ;
+      fscanf( ip , "%5s" , tt ) ;
+      fscanf( ip , "%5d" , &di ) ;
 
 
       for ( j=0 ; j<Dim ; j++ ) {
@@ -148,14 +135,10 @@ void read_gro( FILE *ip ) {
 
   for ( k=0 ; k<nP ; k++ ) {
 
-    a++;
     fscanf( ip , "%5d" , &di ) ;
-    fscanf( ip , "%s" , tt ) ;
-    fscanf( ip , "%s" , tt ) ;
-    if (a < 10000 )
-      fscanf( ip , "%d" , &di ) ;
-    if (a % 100000 == 0)
-      a = 0;
+    fscanf( ip , "%5s" , tt ) ;
+    fscanf( ip , "%5s" , tt ) ;
+    fscanf( ip , "%5d" , &di ) ;
 
 
     for ( j=0 ; j<Dim ; j++ ) {
@@ -180,14 +163,10 @@ void read_gro( FILE *ip ) {
 
     for(i=0; i<(ng_per_partic); i++){
       for(m = 0 ; m<(Ng+1); m++){
-        a++;
         fscanf( ip , "%5d" , &di ) ;
-        fscanf( ip , "%s" , tt ) ;
-        fscanf( ip , "%s" , tt ) ;
-        if (a < 10000 )
-          fscanf( ip , "%d" , &di ) ;
-        if (a % 100000 == 0)
-          a = 0;
+        fscanf( ip , "%5s" , tt ) ;
+        fscanf( ip , "%5s" , tt ) ;
+        fscanf( ip , "%5d" , &di ) ;
 
 
         for ( j=0 ; j<Dim ; j++ ) {
