@@ -140,53 +140,6 @@ int main( int argc , char** argv ) {
       write_quaternions();
       write_rst_quaternions();
 
-      //if ( stress_freq > 0 )
-      //  write_stress() ;
-
-      if ( step >= sample_wait && (step + 1 - sample_wait) % sample_freq == 0 ) {
-        n_samples += 1.0 ;
-        n_samples_iter += 1.0 ;
-        for ( i=0 ; i<M ; i++ ) {
-          avg_rhoga[i] += rhoga[i] ;
-          avg_rhoda[i] += rhoda[i] ;
-          avg_rhodb[i] += rhodb[i] ;
-          avg_rhop[i] += rhop[i] ;
-          avg_rhoga_iter[i] += rhoga[i] ;
-          avg_rhoda_iter[i] += rhoda[i] ;
-          avg_rhodb_iter[i] += rhodb[i] ;
-          avg_rhop_iter[i] += rhop[i] ;
-        }
-        if (ng_per_partic > 0.0) {
-          write_avg_grid_data( "avg_rhoga.dat" , avg_rhoga ) ;
-          write_avg_grid_data_iter( "avg_rhoga" , avg_rhoga_iter ) ;
-        }
-        if (Nda > 0.0) {
-          write_avg_grid_data( "avg_rhoda.dat" , avg_rhoda ) ;
-          write_avg_grid_data_iter( "avg_rhoda" , avg_rhoda_iter ) ;
-        }
-        if (Ndb > 0.0) {
-          write_avg_grid_data( "avg_rhodb.dat" , avg_rhodb ) ;
-          write_avg_grid_data_iter( "avg_rhodb" , avg_rhodb_iter ) ;
-        }
-        if (nP > 0.0) {
-          cout << "step = " << step << ". Writing avg " << avg_iter << endl;
-          write_avg_grid_data( "avg_rhop.dat" , avg_rhop ) ;
-          write_avg_grid_data_iter( "avg_rhop" , avg_rhop_iter ) ;
-        }
-        if ((step + 1 - sample_wait) % avg_freq == 0) {
-          n_samples_iter = 0.0;
-          avg_iter += 1;
-          cout << "step = " << step << ". avg_iter = " << avg_iter << endl;
-          for (i=0; i<M; i++) {
-            avg_rhoga_iter[i] = 0.0;
-            avg_rhoda_iter[i] = 0.0;
-            avg_rhodb_iter[i] = 0.0;
-            avg_rhop_iter[i] = 0.0;
-          }
-        }
-      }
-
-
       write_grid_data( "rhoda.dat" , rhoda ) ;
       write_grid_data( "rhodb.dat" , rhodb ) ;
 
@@ -219,6 +172,66 @@ int main( int argc , char** argv ) {
 
     }// if step % print_Freq == 0
 
+    // if ( stress_freq > 0 )
+    //  write_stress() ;
+
+    if (step >= sample_wait && (step + 1 - sample_wait) % sample_freq == 0) {
+      n_samples += 1.0;
+      n_samples_iter += 1.0;
+      for (i = 0; i < M; i++) {
+        avg_rhoga[i] += rhoga[i];
+        avg_rhoda[i] += rhoda[i];
+        avg_rhodb[i] += rhodb[i];
+        avg_rhop[i] += rhop[i];
+        avg_rhoga_iter[i] += rhoga[i];
+        avg_rhoda_iter[i] += rhoda[i];
+        avg_rhodb_iter[i] += rhodb[i];
+        avg_rhop_iter[i] += rhop[i];
+      }
+      if (ng_per_partic > 0.0) {
+        write_avg_grid_data("avg_rhoga.dat", avg_rhoga);
+        write_avg_grid_data_iter("avg_rhoga", avg_rhoga_iter);
+      }
+      if (Nda > 0.0) {
+        write_avg_grid_data("avg_rhoda.dat", avg_rhoda);
+        write_avg_grid_data_iter("avg_rhoda", avg_rhoda_iter);
+      }
+      if (Ndb > 0.0) {
+        write_avg_grid_data("avg_rhodb.dat", avg_rhodb);
+        write_avg_grid_data_iter("avg_rhodb", avg_rhodb_iter);
+      }
+      if (nP > 0.0) {
+        cout << "step = " << step << ". Writing avg " << avg_iter << endl;
+        write_avg_grid_data("avg_rhop.dat", avg_rhop);
+        write_avg_grid_data_iter("avg_rhop", avg_rhop_iter);
+        fftw_fwd(avg_rhop, ktmp);
+#pragma omp parallel for
+        for (i = 0; i < M; i++) {
+          ktmp[i] *= gammaP_hat[i];
+        }
+        fftw_back(ktmp, avg_smrhop);
+
+        fftw_fwd(avg_rhop_iter, ktmp);
+#pragma omp parallel for
+        for (i = 0; i < M; i++) {
+          ktmp[i] *= gammaP_hat[i];
+        }
+        fftw_back(ktmp, avg_smrhop_iter);
+        write_avg_grid_data("avg_smrhop.dat", avg_smrhop);
+        write_avg_grid_data_iter("avg_smrhop", avg_smrhop_iter);
+      }
+      if ((step + 1 - sample_wait) % avg_freq == 0) {
+        n_samples_iter = 0.0;
+        avg_iter += 1;
+        cout << "step = " << step << ". avg_iter = " << avg_iter << endl;
+        for (i = 0; i < M; i++) {
+          avg_rhoga_iter[i] = 0.0;
+          avg_rhoda_iter[i] = 0.0;
+          avg_rhodb_iter[i] = 0.0;
+          avg_rhop_iter[i] = 0.0;
+        }
+      }
+    }
   }
 
   //fclose( otp ) ;
