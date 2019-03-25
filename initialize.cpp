@@ -541,7 +541,10 @@ void allocate( ) {
   rhop = ( double* ) calloc( M , sizeof( double ) ) ;
   avg_rhop = ( double* ) calloc( M , sizeof( double ) ) ;
   avg_rhop_iter = ( double* ) calloc( M , sizeof( double ) ) ;
+  avg_smrhop = ( double* ) calloc( M , sizeof( double ) ) ;
+  avg_smrhop_iter = ( double* ) calloc( M , sizeof( double ) ) ;
   gammaP = ( double* ) calloc( M , sizeof( double ) ) ;
+  gammaP_hat = ( complex<double>* ) calloc( M , sizeof( complex<double> ) ) ;
   gamma_sig = ( double* ) calloc( M , sizeof( double ) ) ;
   smrhop = ( double* ) calloc( M , sizeof( double ) ) ;
 

@@ -28,7 +28,7 @@ double n_samples_iter, n_samples, phi_filler, phi_M, ***W_tsn,***vir_func,***vir
      **rho , **w ,  *r_dudr , *tmp2,*tmp3, 
        *Diff, delt , chiAB, kappa_p,kappa, C, rho0 , num_averages , 
         Pscalar,Utt , Ubond , Uchi, Ukappa, Ptens[Dim][Dim], Pvir , phiHA, phiHB,
-       *rhoha, *rhohb, *avg_rhoda_iter, *avg_rhodb_iter, *avg_rhoga_iter, *avg_rhop_iter, *avg_rhoda, *avg_rhodb, *avg_rhop, *avg_rhoga, *rhoda, *rhodb , *rhot, *rhop, *smrhop,
+       *rhoha, *rhohb, *avg_rhoda_iter, *avg_rhodb_iter, *avg_rhoga_iter, *avg_rhop_iter, *avg_smrhop_iter, *avg_rhoda, *avg_rhodb, *avg_rhop, *avg_smrhop, *avg_rhoga, *rhoda, *rhodb , *rhot, *rhop, *smrhop,
        **rhoha_t, **rhohb_t, **rhoda_t, **rhodb_t , **rhop_t,
        CG_ratio, ***Stress_bond_t,*tmp_PP,Stress_PP[Dim][Dim],Stress_Ng[Dim][Dim],Stress_nb[Dim][Dim] , Stress_bonds[Dim][Dim],
        ***sts_buf_pp,***sts_buf_ng,***sts_buf , Range,Range2,Rg, Rg3, a, phiP, Rp, Xi, Vp, *gamma_sig, *gammaP,
@@ -58,7 +58,7 @@ char **xc, tt[80] ;
 #ifndef MAIN
 extern
 #endif
-complex<double> *tmp_Ng,**rho_hat,***vir_funcpg_hat ,***vir_funcpp_hat ,***vir_func_hat,*ktmp3,*ktmp2, *ktmp, I, **avg_sk , *grad_uG_hat[Dim] , *grad_uAG_hat[Dim], *grad_uP_hat[Dim], *grad_uPG_hat[Dim] ;
+complex<double> *tmp_Ng,**rho_hat,***vir_funcpg_hat ,***vir_funcpp_hat ,***vir_func_hat,*ktmp3,*ktmp2, *ktmp, I, **avg_sk , *grad_uG_hat[Dim] , *grad_uAG_hat[Dim], *grad_uP_hat[Dim], *grad_uPG_hat[Dim] , *gammaP_hat;
 
 #ifndef MAIN
 extern
