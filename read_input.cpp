@@ -111,6 +111,8 @@ void read_input( void ) {
   fscanf( inp , "%d" , &charge_freq ) ;
   fgets( tt , 80 , inp ) ;
   fscanf( inp , "%lf" , &agg_frac ) ;
+  fgets( tt , 80 , inp ) ;
+  fscanf( inp , "%d" , &slow_equil_flag ) ;
   fclose( inp ) ;
 
 

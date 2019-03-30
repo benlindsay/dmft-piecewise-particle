@@ -31,3 +31,4 @@
 200        RAN_NUM
 1          charge_freq
 0.5       agg_frac
+0         slow_equil_flag

@@ -46,7 +46,7 @@ int RAN_NUM, eps_flag, rst_para,uni_sig,nstot, *tp, nA, nB, nD, Nha, Nhb, Nda, N
     grid_per_partic, ntypes , stress_freq , charge_freq, buff_size, buff_ind ,
     sample_wait, avg_freq, avg_iter, sample_freq, A_partics , pre_equil_steps ,
     nthreads,
-    nsP, nP, Ng, ng_per_partic ;
+    nsP, nP, Ng, ng_per_partic, slow_equil_flag;
 
 
 #ifndef MAIN

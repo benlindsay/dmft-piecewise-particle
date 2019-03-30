@@ -24,7 +24,9 @@ void initialize_configuration( ) {
     random_config() ;
     //calc_A();
     rst_para = 0 ;
-    eps_flag = 1 ;
+    if (slow_equil_flag == 1) {
+      eps_flag = 1 ;
+    }
   }
   else {
     read_gro( inp ) ;
