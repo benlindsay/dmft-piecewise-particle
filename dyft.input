@@ -11,8 +11,8 @@
 0       particle_type flag (0 = neutral, 1 = type A)
 
 17.74583 rho0, in units normalized by diblock properties
-0         chi, 
-0  eps
+0.0         chi, 
+0.0  eps
 0.65         well_shift
 50.0 50.0    kappa, 
 1.0 1.0 5.0 5.0  Monomer mobility/diffusion coefficients
@@ -30,4 +30,5 @@
 0          stress_frequency
 200        RAN_NUM
 1          charge_freq
-0.5       agg_frac
+1.0       agg_frac
+0.5       particle_phase_z_frac
