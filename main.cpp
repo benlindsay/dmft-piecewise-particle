@@ -63,15 +63,15 @@ int main( int argc , char** argv ) {
 
 
     if ( step < sample_wait && eps_flag == 1 ) {
-      delt = 0.0002 ;
+      // delt = 0.0002 ;
       eps = 0.0 ;
-      kappa = kappa_p = 10;
+      // kappa = kappa_p = 10;
     }
     else {
       eps = eps_bkp ;
-      delt = delt_bkp ;
-      kappa = kappa_bkp ;
-      kappa_p = kappa_p_bkp ;
+      // delt = delt_bkp ;
+      // kappa = kappa_bkp ;
+      // kappa_p = kappa_p_bkp ;
     }
 
     forces() ;
