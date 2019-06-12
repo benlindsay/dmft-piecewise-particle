@@ -183,7 +183,8 @@ void initialize() {
 }
 
 void initialize_piecewise_function(double *data, double depth, double height,
-                                   double Rp, double Xi, double well_shift) {
+                                   double Rp, double Xi, double well_shift,
+                                   double lj_sigma) {
   double coeffs[4], ro[Dim], rc[Dim], dr[Dim];
   initialize_piecewise_coeffs(coeffs, depth, height, Rp, Xi, well_shift);
 
@@ -204,9 +205,9 @@ void initialize_piecewise_function(double *data, double depth, double height,
                 coeffs[2] * mdr2 +
                 coeffs[3] * mdr3;
     } else {
-      double lj_minimum_r = pow(2.0, 1.0/6.0) * Rp;
+      double lj_minimum_r = pow(2.0, 1.0/6.0) * lj_sigma;
       double r_shift = Rp + well_shift - lj_minimum_r;
-      double s_over_r6 = pow(Rp / (mdr - r_shift), 6);
+      double s_over_r6 = pow(lj_sigma / (mdr - r_shift), 6);
       double s_over_r12 = s_over_r6 * s_over_r6;
       data[i] = 4.0 * depth * (s_over_r12 - s_over_r6);
     }
@@ -221,9 +222,9 @@ void initialize_potential( ) {
 
   double ro[Dim], rc[Dim], dr[Dim], mdr2 , pref , mdr , k2, kv[Dim] ;
   // Note: the factor of V is for the FFT
-  initialize_piecewise_function(gammaP, 0.0, rho0 * V, Rp, Xi, well_shift);
-  initialize_piecewise_function(uAG, eps * V, kappa_p * V, Rp, Xi, well_shift);
-  initialize_piecewise_function(uPG, 0.0, rho0 * V, Rp, Xi, well_shift);
+  initialize_piecewise_function(gammaP, 0.0, rho0 * V, Rp, Xi, well_shift, lj_sigma);
+  initialize_piecewise_function(uAG, eps * V, kappa_p * V, Rp, Xi, well_shift, lj_sigma);
+  initialize_piecewise_function(uPG, 0.0, rho0 * V, Rp, Xi, well_shift, lj_sigma);
   pref = V / ( pow( 2.0 * sqrt(PI) *Range, Dim ) ) ; // Note: the factor of V comes from the FFT
 
   for ( j=0 ; j<Dim ; j++ )

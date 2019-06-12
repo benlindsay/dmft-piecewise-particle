@@ -1,4 +1,4 @@
-CC = icpc
+CC = g++
 #CFLAGS = -pg -fopenmp
 CFLAGS = -O3 -fopenmp -Wall -I$(FFTW3_INCLUDE)
 LIBS = -lm -lfftw3_omp -lfftw3 -lpthread -L$(FFTW3_LIB)

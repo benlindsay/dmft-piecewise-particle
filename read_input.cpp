@@ -115,6 +115,8 @@ void read_input( void ) {
   fscanf( inp , "%d" , &slow_equil_flag ) ;
   fgets( tt , 80 , inp ) ;
   fscanf( inp , "%lf" , &particle_phase_z_frac ) ;
+  fgets( tt , 80 , inp ) ;
+  fscanf( inp , "%lf" , &lj_sigma ) ;
   fclose( inp ) ;
 
 
