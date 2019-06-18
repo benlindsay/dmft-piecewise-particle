@@ -197,9 +197,9 @@ void initialize_piecewise_function(double *data, double depth, double height,
     double mdr = sqrt( mdr2 ) ;
 
     double mdr3 = mdr2 * mdr;
-    if (mdr < Rp) {
+    if (mdr <= Rp) {
       data[i] = height / 2.0 * erfc( ( mdr - Rp ) / Xi );
-    } else if (Rp < mdr && mdr < Rp + well_shift) {
+    } else if (Rp < mdr && mdr <= Rp + well_shift) {
       data[i] = coeffs[0] +
                 coeffs[1] * mdr + 
                 coeffs[2] * mdr2 +
